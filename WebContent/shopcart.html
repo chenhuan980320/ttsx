@@ -1,0 +1,280 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-购物车</title>
+	
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="css/basic.css" type="text/css" />
+    <style>
+	.num_adds1{
+		width:72px;height:28px;
+		padding-bottom: 40px;
+		color: red;
+	}
+	
+</style>
+</head>
+<body>
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="person.html">用户中心</a>
+					<span>|</span>
+					<a href="shopcart.html">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;购物车</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>
+	</div>
+
+	
+</div>
+
+<div id="payprocess">
+<div class="total_count">全部商品<em>{{totalCount}}</em>件</div>
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05">小计</li>
+		<li class="col06">操作</li>
+	</ul>
+    <form method="post" >
+    
+	<ul class="cart_list_td clearfix"v-for="(item,index) in goods">
+		
+		<li class="col01"><input type="checkbox"   v-model="checkModel"  :value="item.cid+'_'+index+'_'+item.gid" ></li>
+		<li class="col02"><img :src="item.pics.split(';')[0]" width="300px" height="300px"></li>
+		<li class="col03">{{item.gname}}</li>
+		<li class="col04">500g</li>
+		<li class="col05">&yen;{{item.price}}</li>
+		<li class="col06">
+			<div class="num_add">
+				<input id="button" type="button" value="-" style="width: 20px" @click="changeNum(-1,index)"/>
+	            <input id="productnum" type="text" :value="item.nums" style="width: 30px;" minnum="1" readonly="readonly">
+	           	<input id="button"  type="button" value="+" style="width: 20px" @click="changeNum(1,index)"/>
+			</div>
+			
+		</li>
+		<li class="col07"v-html="'&yen;' + (item.price * item.nums).toFixed(2)"></li>
+		<li class="col08"><a href="javascript:void(0)" @click="del(index)">删除</a><span class="num_adds1">{{item.tishi}}</span></li>
+	</ul>
+	<ul class="settlements">
+	
+        <input type='hidden' name='csrfmiddlewaretoken' value='RS5Sb2hQfKi6U0rjhRuXJnP40xXWSwYb' />
+	
+		<li class="col03">	
+		
+		<div style="margin-left:20px; float:left; ">
+		全选: <input type="checkbox"  @click="isSelect_all()" v-model="checked">
+		</div>
+	
+		
+		<em>合计(不含运费)：&yen;{{totalPrice}}</em><br><em>共计{{totalCount}}件商品</em></li>
+		<li class="col04"><a id="nextbtn" class="next" type="next" href="javascript:void(0)" @click="Ordersubmins()">结算</a> </li>
+	</ul>
+    </form>
+</div>
+
+<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    
+
+<div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div>
+
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/qs.js"></script>
+<script type="text/javascript" src="js/basic.js"></script>
+
+<script type="text/javascript">
+let app = new Vue ({
+		el:"#payprocess",
+		data:{
+			goods:[],
+			
+			totalPrice: 0,
+			totalCount:0,
+			checked:false, //是否全选
+			checkModel:[] //选择的数组
+		},
+		watch:{
+			　　checkModel(){
+			　　　　if(this.checkModel.length==this.goods.length){
+			　　　　　　this.checked=true;
+			　　　　}else{
+			　　　　　　this.checked=false;
+			　　　　}
+			this.heji();
+			　　}
+		},
+		mounted: function(){
+			axios.get("member",{params:{op:"check1"}}).then( rt => {
+				if(rt.status ==200 && rt.data.code ==200){//说明成功
+					
+				}else{
+					showMsg("请先登录...","red", function(){location.href='login.html'});
+					return;			
+				}
+			})
+			axios.get('cart',{params:{op:"findByMid"}}).then(rt =>{
+				if(rt.status == 200 && rt.data.code == 200){
+					this.goods = rt.data.data;	
+					console.log(this.goods);
+					
+					
+				}
+			}) 
+		},
+		methods:{
+			isSelect_all:function(){//是否全选
+				if(this.checked){
+				　　　　　　this.checkModel=[];
+				　　　　}else{
+				　　　　　　this.goods.forEach((item,index)=>{
+				　　　　　　if(this.checkModel.indexOf(item.cid)==-1){
+				　　　　　　　　this.checkModel.push(item.cid+'_'+index+'_'+item.gid);
+				　　　　　　}
+				
+				　　　　　　})
+				      this.heji();
+				　　　　}
+			},
+			heji:function(){
+				this.totalPrice= 0 ;
+				this.totalCount= 0 ;
+				this.checkModel.forEach((item)=>{
+				　　　　var str=　　item.split("_");
+				this.totalPrice+= this.goods[str[1]].price * this.goods[str[1]].nums;
+				this.totalCount+= this.goods[str[1]].nums;
+				})	  
+			},
+			changeNum:function(num,index){
+				let count = this.goods[index].nums;
+				var inventory;
+				axios.post("goods", qs.stringify({op:"findByGid",gid:this.goods[index].gid})).then(rt =>{
+					if(rt.status == 200 && rt.data.code == 200){
+						inventory =rt.data.data.inventory;
+						
+					}
+					
+					count += num;
+					
+					if(count==inventory){
+						this.goods[index].tishi= "(购买数量达到上限！)";
+					}else if(count>inventory){
+						if(num>0){
+							count-=num;
+						}
+						if(count==inventory){
+							this.goods[index].tishi= "(购买数量达到上限！)";
+						}else{
+							this.goods[index].tishi= "(购买数量超过现有库存！)";
+						}
+						
+					}else{
+						this.goods[index].tishi= "";
+					}
+					if(count < 1){
+						count = 1;
+						return;				
+					}
+					axios.post("cart", qs.stringify({op:"update",cid:this.goods[index].cid,num:count})).then(rt =>{
+						if(rt.status == 200 && rt.data.code == 200){
+							this.goods[index].nums = count;		
+							this.heji();
+							
+						}
+					})
+				})
+				
+				
+			
+			},
+			
+			del:function(index){
+				if(!confirm("您确定要删除次数据吗？")){
+					return;				
+			}
+				let cid = this.goods[index].cid;
+				
+			axios.post("cart",qs.stringify({op:"del",cid:cid})).then(rt =>{
+				if(rt.status == 200 && rt.data.code == 200){
+					this.goods.splice(index,1);			
+					//this.getTotal();
+					//this.getCount();
+					return;
+						
+				}
+				showMsg("删除购物车失败，请稍后重试...","red");
+			})
+			
+		},
+		Ordersubmins:function(){
+			var cids="";
+			this.checkModel.forEach((item)=>{
+				
+			　　　var str=　　item.split("_");
+				cids+= str[0] +";";
+			
+			})	
+			if(cids != ""){
+				location.href ="Ordersubmi.html?"+cids;
+				return;
+			}
+			
+			
+			
+		}
+	}
+})
+
+
+</script>
+</body>
+</html>

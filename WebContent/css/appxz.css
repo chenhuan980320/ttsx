@@ -1,0 +1,221 @@
+.head-decrible {
+  position: absolute;
+  top: 15.3vw;
+  left: 10.4vw;
+  font-size: 5.3vw;
+  font-family: SourceHanSansCN-Bold;
+  font-weight: bold;
+  color: rgba(255, 31, 136, 1);
+  line-height: 5.6vw;
+}
+.head-decrible img{
+    width: 10.4vw;
+    height: 10.4vw;
+}
+.company {
+  margin-top: 2.4vw;
+  font-size: 2.5vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(255, 31, 136, 1);
+  line-height: 3.2vw;
+}
+.download{
+    margin-top: 4.3vw;
+    width:8.6vw;
+    height:1vw;
+    font-size:0.7vw;
+    font-family:SourceHanSansCN-Regular;
+    font-weight:400;
+    color:rgba(255,31,136,1);
+    line-height:1.5vw;
+    opacity:0.5;
+
+    margin-bottom: 16px;
+}
+
+.version_title{
+    padding: 11.8% 0 16.5% 0;
+}
+.version_title h1{
+    text-align:center;
+    font-size:47px;
+    font-family:SourceHanSansCN-Medium;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    line-height:27px;
+}
+.version_title p{
+    margin-top: 23px;
+    text-align:center;
+    font-size:24px;
+    font-family:SourceHanSansCN-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:33px;
+}
+.app_download{
+    background:rgba(239,239,244,1);
+    padding-bottom: 8.5vw;
+    position: relative;
+}
+.app_download_step{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    margin-left: 11vw;
+    display: inline-block;
+    /* background:rgba(255,51,133,1); */
+    /* padding: 12.5% 0 7% 54% ; */
+}
+.app_download_step_left{
+    /* float: left; */
+    /* width:51%; */
+    background:rgba(239,239,244,1);
+    position: relative;
+}
+.app_download_step_right{
+    width: 100%;
+    background:rgba(255,51,133,1);
+    padding-top: 8.2vw;
+    /* padding-left: 4.6vw; */
+    padding-left: 46.8vw;
+    height: 29.7vw;
+}
+
+
+.app_download_step_right h1{
+    /* 37px */
+    font-size:2.5vw;
+    font-family:SourceHanSansCN-Medium;
+    font-weight:500;
+    color:#fff;
+    line-height:7.8vw;
+}
+
+.app_download_step_right .app_download_step_right_item{
+    font-size:1.4vw;
+    font-family:SourceHanSansCN-Regular;
+    font-weight:400;
+    color:#fff;
+    margin-bottom: 22px;
+}
+.app_download_step_right .app_download_step_right_item img{
+    width:1.4vw;
+    height: 1.4vw;
+    position: relative;
+    top: 0.3vw;
+}
+.app_download_step_right .app_download_step_right_item .span{
+    display: inline-block;
+    vertical-align:top;
+}
+.app_download_step_right .app_download_step_right_item .span:nth-child(even){
+    /* line-height: 2px; */
+}
+.app_download_step_img{
+    position: absolute;
+    width:46.8vw;
+    height: 49.4vw;
+    top: -9.5vw;
+    left: -4vw;
+}
+
+.version_img_2 {
+    width: 100%;
+    padding: 10.3% 10% 9.3%;
+}
+.version_img_2 img{
+    width: 100%;
+}
+
+.new_user {
+    padding-left:10.6%; 
+}
+.new_user h1{
+    font-size:47px;
+    font-family:SourceHanSansCN-Medium;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+    margin-bottom: 60px;
+}
+
+.coupon_group {
+    display: inline-block;
+}
+.coupon_group_item{
+    display: inline-block;
+    margin-right: 10vw;
+} 
+.coupon_group_item h5{
+    font-size:23px;
+    font-family:SourceHanSansCN-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+}
+.coupon_group_item label{
+    background: url(../image/coupon.png) no-repeat;
+    width: 127px;
+    height: 44px;
+    font-size: 25px;
+    font-family: SourceHanSansCN-Medium;
+    font-weight: 500;
+    color: rgba(255,255,255,1);
+    line-height: 44px;
+    text-align: center;
+    display: block;
+    margin-bottom: 15px;
+}
+.coupon_group_item span{
+    font-size:17px;
+    font-family:SourceHanSansCN-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+}
+.coupon_group_item .line_height29{
+    line-height:29px;
+}
+.mar30{
+    margin-top:30px;
+}
+.new_user h3{
+    margin-top: 90px;
+    margin-bottom: 28px;
+    font-size:30px;
+    font-family:SourceHanSansCN-Medium;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    line-height:22px;
+}
+.new_user>p{
+    font-size:20px;
+    font-family:SourceHanSansCN-Regular;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:2vw;
+}
+
+
+.backTop {
+    margin-top: 9%;
+    width: 100%;
+    text-align: center;
+  }
+
+
+  @media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .coupon_group_item {
+        display: inline-block;
+        margin-right: 3vw;
+    }
+    .new_user>p {
+        font-size: 18px;
+        font-family: SourceHanSansCN-Regular;
+        font-weight: 400;
+        color: rgba(51,51,51,1);
+        line-height: 26px;
+    }
+  }

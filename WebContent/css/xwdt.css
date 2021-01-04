@@ -1,0 +1,290 @@
+.head-decrible {
+  font-size: 3.1vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  line-height: 3.7vw;
+  position: absolute;
+  top: 20.7vw;
+  left: 10.8vw;
+  color: rgba(255, 255, 255, 1);
+}
+.company {
+  margin-top: 3.3vw;
+  font-size: 1.6vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  line-height: 2.3vw;
+}
+
+.media_report{
+  text-align: center;
+  margin-top:10vw; 
+}
+.media_report h1{
+  font-size:37px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:36px;
+}
+.media_report p{
+  margin-top: 19px;
+  font-size:24px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:33px;
+}
+.news_img{
+  margin: 76px 6.4% 0;
+  background:rgba(36,59,127,1);
+  position: relative;
+  text-align: left;
+  /* display: inline-block; */
+}
+.news_img img{
+  display: inline-block;
+  vertical-align: top;
+}
+.news_img .line1 img{
+  width: 53.3vw;
+  height: 35.9vw;
+}
+.news_img .line2 img{
+  width: 54vw;
+  height: 35.9vw;
+  display: inline-block;
+  float: right;
+}
+.introduction {
+  display: inline-block;
+  width:100;
+  margin-top: 11.8vw;
+  margin-left: 8.1vw;
+}
+.introduction h3{
+  display: inline-block;
+  font-size:2.6vw;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(252,255,255,1);
+  line-height:3.1vw;
+  vertical-align: top;
+}
+.introduction p{
+  font-size:24px;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  color:rgba(252,255,255,1);
+  line-height:33px;
+  opacity:0.4;
+}
+
+
+.postion{
+  margin-top: 12px;
+  display: inline-block;
+  width: 100%;
+  padding: 0 6.4%;
+}
+.postion_item1,.postion_item2,.postion_item3{
+  background: #243B7F;
+  display: inline-block;
+  width: 28.5vw;
+  height: 30vw;
+}
+.postion_item1{
+  float: left;
+}
+.postion_item3{
+  float: right;
+}
+.postion img{
+  width: 100%;
+}
+.postion figcaption{
+  font-size:1.25vw;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:2.4vw;
+}
+figure{
+  margin-top: 2.7vw;
+  text-align: left;
+  margin-left: 4.3vw;
+}
+.postion figure p{
+  margin-top: 0.9vw;
+  font-size:1vw;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  line-height:1.3vw;
+  opacity:0.5;
+}
+
+.article{
+  margin-top: 6.5%;
+  margin-left: 10.6%;
+  margin-bottom: 10.7%;
+  font-size:1.4vw;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:3.4vw;
+  opacity:0.7;
+}
+.awards{
+  background:rgba(248,248,5248,1);
+  padding: 9.3% 6.3% 12.6%;
+  text-align: center;
+}
+.awards h1,.financing h1{
+  font-size:2.6vw;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:2.6vw;
+}
+.awards p{
+  margin-top: 1.3vw;
+  font-size:24px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:2.3vw;
+  margin-bottom: 4.9vw;
+}
+.awards{
+  width: 100%;
+}
+
+.financing{
+  padding: 13.2% 7.6% 0;
+  text-align: center;
+}
+.financing  p{
+  margin-top: 1.3vw;
+  font-size:24px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:2.3vw;
+}
+.financing .spell{
+  font-size:15px;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:33px;
+  opacity:0.5;
+  margin-bottom: 29px;
+}
+.financing hr{
+  margin-top: 5.8%;
+  height:1px;
+  background:rgba(51,51,51,1);
+  opacity:0.3;
+}
+
+.article2{
+  margin: 5.9% 0 9.3% 10.6%;
+  font-size:1.4vw;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  line-height:3.1vw;
+  opacity:0.7;
+}
+.parentWrapbg{
+  background: #F8F8F8;
+  padding: 9.5%0 12%;
+}
+.parentWrap{
+  text-align: center;
+  overflow: hidden;
+  margin: 0 9.4%;
+}
+.parentWrap h1{
+  font-size:37px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:36px;
+}
+.parentWrap p{
+  margin-top: 19px;
+  margin-bottom: 74px;
+  font-size:24px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:33px;
+}
+.parent{
+  font-size: 0;
+  margin-right: -20px;
+  /* margin-right: 13px; */
+  overflow: hidden;
+}
+.child{
+  display:inline-block;
+  vertical-align: top;
+  width: 20%;
+  /* padding-right: 20px; */
+  padding-right: 13px;
+  box-sizing: border-box;
+  background-clip: content-box;
+  font-size: 14px;
+  background-color:#FFFFFF;
+}
+.child img{
+  width: 100%;
+}
+
+.decrible{
+  height: 97px;
+  /* vertical-align: middle; */
+}
+.decrible p {
+  font-size:14px;
+  font-family:SourceHanSansCN-Regular;
+  font-weight:400;
+  color:rgba(0,0,0,1);
+  line-height:19px;
+  opacity:0.5;
+  text-align: left;
+  padding-left: 24px;
+}
+.parent:last-child{
+  margin-top: 43px;
+}
+.backTop {
+  margin-top: 9%;
+  width: 100%;
+  text-align: center;
+}
+
+
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .introduction{
+      margin-left: 4vw;
+    }
+    .introduction h3{
+      display: inline-block;
+      font-size: 2vw;
+      font-family: SourceHanSansCN-Medium;
+      font-weight: 500;
+      color: rgba(252,255,255,1);
+      line-height: 3.1vw;
+      vertical-align: top;
+    }
+    .news_img .line2 img{
+      width: 50vw;
+      height: 35.9vw;
+      display: inline-block;
+      float: right;
+    }
+} 

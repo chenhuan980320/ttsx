@@ -1,0 +1,364 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-购物车</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="css/basic.css" type="text/css" />
+    <style>
+	.Myplace{
+	height: 300px;
+	border: 2px  #ccc;
+	border-style:dotted solid;
+	margin-bottom: 20px;
+	}
+	.order_Shop{
+	border: 2px solid #ccc;
+	
+	}
+	
+	.Order_each{
+	border: 3px  #80B2FF;
+	border-style: solid none solid none ;
+	margin-bottom: 20px;
+	
+	}
+	.em{color:#80B2FF;font-size:22px;font-weight:bold;
+		margin-left: 900px;
+	}
+	.mask{
+			position:fixed;
+			top: 0px;
+			left: 0px;
+			width:100%;
+			height: 100%;
+			background-color: #000000;
+			opacity: 0.6;
+			z-index:1000;
+		}
+	.main_dis1{
+			width: 350px;
+			position:fixed;
+			top: 50px;
+			left: 370px;
+			background-color: white;
+			border: 4px solid #FFFFFF;
+			z-index:1001;
+			
+		}
+		
+	.main_dis2{display:none;}
+	.Order_num{
+	width: 10px;
+	height: 28px;
+	
+	margin: 40px auto 0;
+	}
+</style>
+</head>
+<body>
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="person.html">用户中心</a>
+					<span>|</span>
+					<a href="shopcart.html">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;确认订单信息</div>
+		<div style="margin-left:100px; float:left; ">
+			<!-- <img src="image/Order.png"></a> -->
+		</div>
+	</div>
+
+	
+</div>
+
+<div id="payprocess">
+	<div class="Myplace"> 
+	<h1>确认收货地址</h1>
+	
+	</div>
+	<ul class="cart_list_th clearfix">
+		<li class="col01">商品名称</li>
+		<li class="col02">商品单位</li>
+		<li class="col03">商品价格</li>
+		<li class="col04">数量</li>
+		<li class="col05"></li>
+		<li class="col06">小计</li>
+	</ul>
+
+    <div class="Order_each"  v-for="(od) in order">
+    <h2>店铺名:{{od.sname}}</h2>
+	<ul class="cart_list_td clearfix"v-for="(item,index) in goods"  v-if="item.sid == od.sid" >
+		
+		<li class="col01"></li>
+		<li class="col02"><img :src="item.pics.split(';')[0]" width="300px" height="300px"></li>
+		<li class="col03">{{item.gname}}</li>
+		<li class="col04">500g</li>
+		<li class="col05">&yen;{{item.price}}</li>
+		<li class="col06"><span >{{item.nums}}</span></li>
+		<li class="col07"></li>
+		<li class="col08"v-html="'&yen;' + (item.price * item.nums).toFixed(2)"></li>
+		
+	</ul>
+		<em class="em">店铺合计(含运费):&yen;{{od.total}}</em>
+  </div>
+  
+  <ul class="settlements">
+	
+       
+	
+		<li class="col03">	
+		
+		<em>总计:&yen;{{totalPrice}}</em></li>
+		<li class="col04"><a id="nextbtn" class="next" type="next" href="javascript:void(0);" @click="ordsubmit()">提交</a> </li>
+	</ul>
+</div>
+
+<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+</div>
+	
+	
+<div id="mask_div" ></div>
+<div id="main_dis"  class="main_dis1 main_dis2">
+<h2>新增地址</h2>
+	<ul>
+		<li>
+			<label >收件人姓名：</label>
+			<input id="address_name" type="text" v-model="name" />
+		</li>
+		<li>
+			<label >联系方式：</label>
+			<input id="address_tel" type="text" v-model="tel" />
+		</li>
+		<li>
+			<label>省:</label>
+			<select  id="select_address_province" v-model="province" ></select>					
+		</li>
+		<li>
+			<label>市:</label>
+			<select id="select_address_city" v-model="city" ></select>
+		</li>
+		<li>
+			<label>县(区)：</label>
+			<select id="select_address_area" v-model="area" ></select>
+		</li>
+		<li>
+			<label >详细地址：</label>
+			<input  id="address_detail" type="text" v-model="addr" />
+		</li>
+		<li>
+			<button  id="address_save" @click="add" >保存</button>
+		</li>
+	</ul>
+</div>
+<div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div> 
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/qs.js"></script>
+<script type="text/javascript" src="js/basic.js"></script>
+
+<script type="text/javascript">
+var mid="";
+var pid="11";
+var Isok=true;
+let app = new Vue ({
+		el:"#payprocess",
+		data:{
+			goods:[],
+			totalPrice: 0,
+			order: [],
+			pid:"11",		
+		},watch:{
+			　　pid(){
+					pid=this.pid;
+			　　}
+		},
+		mounted: function(){
+			
+			axios.get("member",{params:{op:"check1"}}).then( rt => {
+				if(rt.status ==200 && rt.data.code ==200){//说明成功
+					mid=rt.data.data.mid;
+				}else{
+					
+					showMsg("请先登录...","red", function(){location.href='login.html'});
+					return;			
+				}
+				
+				/**********************************************************/
+				var cids = location.search;
+				cids = cids.replace("?","");
+				if(cids == ""){
+				
+					location.href="index.html";
+					return;
+				}
+				
+				axios.post("cart",qs.stringify({op:"findByCids",cids:cids})).then(rt =>{
+					if(rt.status == 200 && rt.data.code == 200){
+						this.goods = rt.data.data;
+						//console.log(this.goods);
+						var temp=rt.data.data[0].sid;
+						var sname=rt.data.data[0].sname;
+						var total=0;
+						for(let i=0;i<rt.data.data.length;i++){
+							this.totalPrice+= rt.data.data[i].price *  rt.data.data[i].nums;
+							if(temp != rt.data.data[i].sid){
+								this.order.push({sid:temp,total:total,sname:sname})
+								temp=rt.data.data[i].sid;
+								sname=rt.data.data[i].sname
+								total=0;
+							}
+							total+=rt.data.data[i].price * rt.data.data[i].nums;
+						}
+						this.order.push({sid:temp,total:total,sname:sname})
+						
+						//console.log(this.order); 
+					}else{
+						location.href="index.html";
+					}
+					
+				})
+			})
+			
+		},
+		methods:{
+			//*********************************************************************
+			ordsubmit:function(){
+				
+				
+				
+/*
+1.循环查询库存
+2.循环修改数量和销量                                         (有商品库存数量不足，订单取消跳转至购物车);
+3循环order: [] 用String ono=UUID.randomUUID().toString().replace("-", "");做订单ID  和goods[]
+4 循环订单生成   每条订 所需参数    oid(ono后台) mid  sid  pid  odate(sql语句生成) status(1)  total  goods[]用sid 循环生成 一个字符串   did(sql语句0) oid(ono后台) gid pics price nums 下划线拼接 ;号拼接
+5生成成功		删除购物车中的goods[]goods.gid 		
+	*/
+					$.each(this.goods, function(i, item){     
+						axios.post("goods",qs.stringify({op:"findCGN",gid:item.gid,nums:item.nums})).then(rt =>{
+							if(rt.status == 200 && rt.data != null &&rt.data != ""){
+								
+							}else{
+								var Isok=false;
+								showMsg("商品 "+item.gname+"库存不足","red", function(){location.href='shopcart.html'});
+								
+								
+							}
+							
+						})   
+						
+					});  
+
+					$.each(this.goods, function(i, item){     
+						axios.post("goods",qs.stringify({op:"updateOder",gid:item.gid,nums:item.nums})).then(rt =>{
+						
+						})   
+					});   	
+					$.each(this.order, function(i, item){     
+						
+						$.ajax({
+						    type : "POST", //请求方式
+						    async: false, // fasle表示同步请求，true表示异步请求
+						    url:'order',//请求地址
+						    data : {op:"add",mid:mid,sid:item.sid,pid:pid,total:item.total}, //数据，json字符串
+						    //queryParams: {op:"findCGN",gid:item.gid,nums:item.nums},
+						    success : function(result) { //请求成功
+						    	$.each(app.$data.goods, function(i,good){
+						    		console.log(good);
+						    		if(good.sid==item.sid){
+						    			$.ajax({
+										    type : "POST", //请求方式
+										    async: false, // fasle表示同步请求，true表示异步请求
+										    url:'detail',//请求地址
+										    data : {op:"add",gid:good.gid,gname:good.gname,pics:good.pics.split(';')[0],price:good.price,nums:good.nums}, //数据，json字符串
+										    //queryParams: {op:"findCGN",gid:item.gid,nums:item.nums},
+										    success : function(result) { //请求成功
+										    	
+										    },
+										    error : function(e){  //请求失败，包含具体的错误信息
+										        console.log(e.status);
+										        console.log(e.responseText);
+										        var Isok=false;
+										    }
+										});  
+						    			
+						    		}
+						    		
+						    	}); 
+						    	
+						    },
+						    error : function(e){  //请求失败，包含具体的错误信息
+						        console.log(e.status);
+						        console.log(e.responseText);
+						        var Isok=false;
+						    }
+						    
+						}); 
+					}); 
+					var cids="";
+					$.each(this.goods, function(i, item){ 
+						cids +=item.cid+";";
+						  
+					}); 
+					axios.post("cart",qs.stringify({op:"dels",cids:cids})).then(rt =>{
+						if(rt.status==200&&rt.data.code==200){}else{
+							Isok=false;
+						}
+						
+					}) 
+					if(Isok){
+						showMsg("订单提交成功","green", function(){location.href='shopcart.html'});
+					}	
+				
+			}
+		//*********************************************************************
+		
+		}
+})
+
+
+</script>
+</body>
+</html>

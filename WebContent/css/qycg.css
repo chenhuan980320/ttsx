@@ -1,0 +1,232 @@
+.head-describle {
+  font-size: 3.1vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  line-height: 3.7vw;
+  position: absolute;
+  top: 19.2vw;
+  left: 10.8vw;
+  color: rgba(255, 255, 255, 1);
+}
+.company {
+  margin-top: 3.3vw;
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 1);
+  line-height: 2.3vw;
+}
+.save_moeny {
+  width: 100%;
+  padding: 11.8vw 0 6vw 0;
+  text-align: center;
+}
+.save_moeny h1 {
+  font-size: 3.3vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 1.8vw;
+}
+.save_moeny p {
+  /* width:58%; */
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.3vw;
+  margin: 1.6% auto 0;
+}
+
+.save_moeny_img {
+  margin: 0 5.5%;
+}
+.save_moeny_img img {
+  width: 100%;
+}
+.bgF8 {
+  margin-top: 3.6%;
+  background: #f8f8f8;
+  display: inline-block;
+  width: 89%;
+}
+.card {
+  padding: 9.7% 5.2% 6.3% 6.8%;
+}
+
+.bgF8 .img {
+  width: 37%;
+  display: inline-block;
+  transform: translateY(-32%);
+  vertical-align: middle;
+}
+.bgF8 ul {
+  width: 62%;
+  font-size: 1.8vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.4vw;
+  display: inline-block;
+}
+.bgF8 ul li {
+  list-style-type: disc;
+  margin-bottom: 4vw;
+}
+.about {
+  padding: 3.6% 5% 5.6% 4.5%;
+  text-align: left;
+}
+.about2 {
+  padding: 3.6% 5% 7.8% 4.5%;
+  text-align: left;
+}
+.about h3,
+.about2 h3 {
+  font-size: 2.3vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 1.4vw;
+}
+.about p,
+.about2 p {
+  width: 78vw;
+  font-size: 1.3vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 30px;
+  margin-top: 25px;
+}
+.FF1F88 {
+  color: #ff1f88;
+}
+.blg {
+  padding: 10.6% 0 0 6.8%;
+  position: relative;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.4vw;
+  margin-top: 3.6%;
+  background: #f8f8f8;
+  display: inline-block;
+  width: 89%;
+}
+.blg .ul {
+  /* width: 57.4%; */
+  display: inline-block;
+  vertical-align: top;
+}
+.blg .ul ul {
+  font-size: 1.8vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.4vw;
+  display: inline-block;
+}
+.blg .ul h5 {
+  font-size: 1.8vw;
+}
+.blg .ul p {
+  font-size: 1.4vw;
+}
+.blg ul li {
+  list-style-type: disc;
+  margin-bottom: 2.5vw;
+}
+.blg .emil {
+  margin-top: 5.2vw;
+  font-size: 1.6vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.2vw;
+}
+.blg .img {
+  vertical-align: top;
+  /* width: 42%; */
+  height: 47vw;
+  display: inline-block;
+  float:right;
+}
+.blg .img img {
+  width: 100%;
+}
+.save_moeny_ruzhu {
+  padding: 11.8% 0 3% 0;
+}
+
+.about2 .Heavy {
+  font-size: 1.4vw;
+  font-family: SourceHanSansCN-Heavy;
+  font-weight: 800;
+  color: rgba(51, 51, 51, 1);
+  line-height: 30px;
+}
+.save_moeny_img .button_apply {
+  margin-top: 48px;
+  width: 253px;
+  height: 52px;
+}
+
+.purchase {
+  background: rgba(248, 248, 248, 1);
+  padding: 7.6% 0 8.8% 0;
+}
+.purchase h3 {
+  font-size: 2.3vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.3vw;
+  text-align: center;
+  margin-bottom: 5%;
+}
+.purchase_item_group {
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: center;
+}
+.purchase_item {
+  display: inline-block;
+}
+.purchase_item .title {
+  width: 3.4vw;
+  height: 1.5vw;
+  padding: 4px 10px;
+  background: rgba(51, 51, 51, 1);
+  border-radius: 11px;
+  margin-right: 10px;
+  color: #ffffff;
+  margin-left: 46px;
+}
+.purchase_item .span {
+  font-size: 1.4vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.3vw;
+  opacity: 0.6;
+}
+.backTop {
+  margin-top: 9%;
+  width: 100%;
+  text-align: center;
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .purchase_item .title {
+    width: 3.4vw;
+    height: 1.5vw;
+    padding: 4px 10px;
+    background: rgba(51, 51, 51, 1);
+    border-radius: 11px;
+    margin-right: 10px;
+    color: #ffffff;
+    /* margin-left: 46px; */
+  }
+}

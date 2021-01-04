@@ -1,0 +1,112 @@
+<table id="admin_data" data-options="fit:true"></table>
+
+<script>
+var admin_index = undefined;
+var admin_op;
+var admin_info;
+var admin_status_obj=[{id:0,name:"禁用"},{id:1,name:"正常"}]
+var admin_obj = $('#admin_data').datagrid({
+	url:'../../admin',
+	queryParams: {op:"findByPage"},
+	fitColumns:true,
+	striped: true,
+	loadMsg:"数据加载中...",
+	pagination:true,
+	rownumbers:true,
+	pageSize:5,
+	singleSelect: true,
+	pageList:[2,5,10,20,30,40,50,100],
+	sortName:"aid",
+	remoteSort: false,
+	columns:[[
+		{field:'aid',title:'管理员编号',width:100,align:'center',sortable:"true"},
+		{field:'tel',title:'管理员手机号',width:100,align:'center',editor:{type:"text", options:{required:true}}},
+		{field:'aname',title:'管理员姓名',width:100,align:'center',editor:{type:"text"}},
+		{field:'pwd',title:'管理员密码',width:200,align:'center',editor:{type:"text"}},
+		{field:'email',title:'联系邮箱',width:200,align:'center',editor:{type:"text"}},
+		{field:'status',title:'类型状态',width:100,align:'center',formatter:function(val,row,index){
+			if(val ==1){
+				return'<font color="green">正常</font>';
+			}else{
+				return'<font color="red">禁用</font>';
+			}//editor设置其为可编辑//设置编辑格式          //设置编辑规则属性	
+		}, editor:{type:"combobox",options:{editable:false,required:true,valueField:"id",textField:"name", data:admin_status_obj}}}
+											//   		传递到后台服务器用的值的属性   显示在界面上给用户看到        这数据来源哪个集合对象
+		]],
+		toolbar:[{
+			iconCls:'icon-add',
+			text:"添加",
+			handler:function(){
+				admin_op = "reg";
+				admin_info = "添加";
+				
+				if(admin_index != undefined){
+					return;
+				}
+				
+				admin_obj.datagrid('insertRow',{index:0, row:{}});
+				admin_index = 0;
+				admin_obj.datagrid('beginEdit',admin_index);
+			}
+		},'-',{
+			iconCls:'icon-edit',
+			text:"修改",
+			handler:function(){
+				admin_op = "update";
+				admin_info = "修改";
+				
+				if(admin_index != undefined ){
+					return;
+				}
+				
+				var row = admin_obj.datagrid('getSelected');
+				if(row == null){
+					$.messager.show({title:'温馨提示', msg:'请选择您要修改的类型...', timeout:2000, showType:'slide'});
+					return;
+				}
+				
+				admin_index = admin_obj.datagrid('getRowIndex', row);
+				
+				admin_obj.datagrid('beginEdit', admin_index);
+			}
+		},'-',{
+			iconCls:'icon-save',
+			text:"保存",
+			handler:function(){
+				if(admin_index == undefined){
+					return;
+				}
+				admin_obj.datagrid('endEdit',admin_index);
+				var row = admin_obj.datagrid("getChanges")[0];
+				
+				
+				
+				if(row == undefined){
+					admin_index = undefined;
+					return;
+				}
+				row.op = admin_op;
+				
+				$.post("../../admin",row,data =>{
+					if(data.code == 200){
+						$.messager.show({title:'成功提示',msg:'添加成功...',timeout:2000,showType:'slide'});
+						admin_obj.datagrid("reload");
+					}else{
+						admin_obj.datagrid("rejectChanges");
+						$.messager.alert('失败提示','添加失败...','error');
+					}
+					row = null;
+					admin_index = undefined;
+				},"json");
+			}
+		},'-',{
+			iconCls:'icon-undo',
+			text:"撤销",
+			handler:function(){
+				admin_index = undefined;
+				admin_obj.datagrid("rejectChanges");
+			}
+		}]
+});
+
+</script>

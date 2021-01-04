@@ -1,0 +1,113 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-登录</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/basic.css">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+    
+</head>
+<body>
+
+
+	<div class="login_top clearfix">
+		<a href="index.html" class="login_logo"><img src="picture/logo02.png"></a>
+	</div>
+	<div class="login_form_bg" id="loginbox">
+		<div class="login_form_wrap clearfix">
+			<div class="login_banner fl"></div>
+			<div class="slogan fl">日夜兼程 · 急速送达</div>
+			<div class="login_form fr">
+				<div class="login_title clearfix">
+					<h1>用户登录</h1>
+					<a href="register.html">立即注册</a>
+				</div>
+				<div class="form_input">
+                    
+					<form method="post">
+                        <input type='hidden' name='csrfmiddlewaretoken' value='fGI9bfKEVvVjATmeS1ZCSZTDPB8pUlK6'>
+						<input type="text" name="username" v-model="account"class="name_input"placeholder="请输入用户名">
+						<div class="user_error">输入错误</div>
+						<input type="password" name="pwd" class="pass_input" v-model="pwd"placeholder="请输入密码" >
+						<div class="pwd_error">输入错误</div>
+						<div class="more_input clearfix">
+							<a href="#">忘记密码</a>
+						</div>
+						<input type="button" name="" value="登录" class="input_submit"href="javascript:void(0)" @click="login">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+    
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+ <div class="popup_con">
+		<div class="popup">
+			<p id="popup_info"></p>
+		</div>
+	</div>
+<link rel="stylesheet" href="css/basic.css" />
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/qs.js"></script> 
+     
+  <script type="text/javascript">
+
+  function showMsg(msg,color,callback){
+		$("#popup_info").text(msg).css("color",color);
+		$(".popup_con").fadeIn('fast',function(){
+			setTimeout(function() {
+				$(".popup_con").fadeOut('fast',callback);
+			}, 2000);
+			
+		})
+	}
+let login = new Vue({
+	el:"#loginbox",
+	data: {
+		account:"",
+		pwd:"",	
+		
+	},
+	methods: {
+		login: function(){
+			console.log(this.account);
+			console.log(this.pwd);
+			if(this.account == "" || this.pwd == ""){
+				showMsg("您输入的信息不完整,请重新输入...","red");
+				return;
+			}
+			axios.post("member",qs.stringify({op:"login",account:this.account, pwd:this.pwd,sf:"1"})).then(rt =>{
+				if(rt.status == 200 && rt.data.code == 200){
+					location.href ="index.html";
+					return;
+				}
+				showMsg("账号或密码错误，请确认重新登录...","red");
+			})
+		}
+	}
+})
+</script>  
+    
+	
+</body>
+</html>

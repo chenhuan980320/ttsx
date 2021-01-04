@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<title>加盟登陆</title>
+<link rel="stylesheet" href="css/layui.css">
+<link rel="stylesheet" href="css/font_775035_uukfky4fj9b.css">
+<link rel="stylesheet" href="css/common2.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/basic.css" />
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+
+</head>
+<body>
+<div class="userlogin-wrap" id="userloginbox">
+		<div class="userform-box userloginbox" style="display: block;">
+			<h2>后台登录</h2>
+			<img class="userlogin-img userlogin-img1" src="picture/login1.png" style="display: block;">
+			<img class="userlogin-img userlogin-img2" src="picture/login2.png">
+			<img class="userlogin-img userlogin-img3" src="picture/login3.png">
+		
+			<input type="text" class="layui-input login-username" name="username" placeholder="手机号/邮箱" lay-verify="required" v-model="account">
+			<input type="password" class="layui-input login-password" name="password" placeholder="请输入用户密码" lay-verify="required" v-model="pwd">
+			<tr>
+		  		<td align="right">验证码：</td>
+			  	<div class="intbox">
+				      <input id="regsafecode"  class="int-type w-sec" type="text" name="regsafecode" tips="验证码"  v-model="code" rule="required" codedata="" maxlength="4">
+				      <img id="safecoderegimg" class="pic" width="110" height="30" src="code">
+				      <a id="safecodereglink" class="tips" href="javascript:changImage()">看不清？换一张</a>
+			      </div>
+		   		<label id="regsafecode_msg" class="labelbox"></label>
+			</tr>
+			<button class="layui-btn layui-btn-fluid layui-btn-sm" @click="login">登录</button>
+			
+
+			<p class="common-login-forget"><span>没有账号？<a href="reg_s.html">注册</a></span><a href="index.html">返回首页</a><span>&nbsp;-&nbsp;<a href="resetpsw_s.html">忘记密码</a></span></p>
+			<div class="other-login-way">
+				<p class="other-login-tips">————<span>请选择账号登录类型</span>————</p>
+				<div>
+					<label style="margin-right:50px;"><input type="radio" name="sf" value="0"  checked="true">商家</label>
+					<label><input type="radio" name="sf" value="1">管理员</label>
+				</div>
+			</div>
+		</div>
+</div>
+<div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div>
+<!-- 底部 -->
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript"src="js/vue.js"></script>
+<script type="text/javascript"src="js/axios.js"></script>
+<script type="text/javascript"src="js/qs.js"></script>
+<script type="text/javascript">
+function changeCode(){
+	$("#safecodelogining").attr("src","code?d=" + new Date());
+	
+}
+function showMsg(msg,color,callback){
+	$("#popup_info").text(msg).css("color",color);
+	$(".popup_con").fadeIn('fast',function(){
+		setTimeout(function() {
+			$(".popup_con").fadeOut('fast',callback);
+		}, 2000);
+		
+	})
+}
+
+let login = new Vue({
+	el:"#userloginbox",
+	data: {
+		account:"",
+		pwd:"",
+		code: "",
+		status:"",
+	},
+	methods: {
+		login: function(){
+			
+		
+			if(this.account == "" || this.pwd == ""){
+				showMsg("您输入的信息不完整,请重新输入...","red");
+				return;
+				
+			}
+			//console.log($(':radio[name="sf"]:checked').val());
+			if($(':radio[name="sf"]:checked').val()==0){
+				axios.post("member",qs.stringify({op:"login",sf:"2",account:this.account, pwd:this.pwd,code:this.code})).then(rt =>{
+					//console.log(rt.status);
+					//console.log(rt.data.code);
+					if(rt.status == 200 && rt.data.code == 200){
+						if(rt.data.status==0){
+							showMsg("账号以禁用，请联系管理员...","red");
+							return;
+						}
+						//location.href ="back/manager/index.html?"+$(':radio[name="sf"]:checked').val();
+						location.href ="back/manager_mem/index.html";
+						return;
+					}
+					showMsg("账号或密码错误，请确认重新登录...","red");
+				})
+			}else{
+				axios.post("admin",qs.stringify({op:"login",account:this.account, pwd:this.pwd,code:this.code})).then(rt =>{
+					console.log(rt.status);
+					console.log(rt.data.code);
+					if(rt.status == 200 && rt.data.code == 200){
+						//location.href ="back/manager/index.html?"+$(':radio[name="sf"]:checked').val();	
+						location.href ="back/manager/index.html";
+						return;
+					}
+					showMsg("账号或密码错误，请确认重新登录...","red");
+				})
+			}
+			
+			
+		}
+	}
+})
+</script>
+</body>
+</html>

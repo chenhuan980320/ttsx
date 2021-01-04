@@ -1,0 +1,283 @@
+<!doctype html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-商品详情</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	
+    
+</head>
+<style>
+
+
+</style>
+<body>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/slide.js"></script>
+	
+	<script type="text/javascript"src="js/vue.js"></script>
+	<script type="text/javascript"src="js/axios.js"></script>
+	<script type="text/javascript"src="js/qs.js"></script>
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="/user/">用户中心</a>
+					<span>|</span>
+					<a href="/cart/">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+<div id="goods_details">
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="search_con fl">
+            <form method="post" >
+                <input type="text" class="input_text fl" name="q" placeholder="搜索商品">
+                <input type="submit" class="input_btn fr" name="" value="搜索">
+            </form>
+		</div>
+		<div class="guest_cart fr">
+			<a href="/cart/" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count"></div>
+		</div>
+	</div>
+
+	<div class="goods_detail_con clearfix">
+		<div class="goods_detail_pic fl">
+		<ul class="slide_pic">
+		<img :src="pics[0]" width="300px" height="300px">
+		</ul>
+		</div>
+
+		<div class="goods_detail_list fr">
+			<h3>{{goods.gname}}</h3>
+			<p>草莓简介</p>
+			<div class="prize_bar" >
+				<span class="show_pirze">&yen;{{goods.price}}</em></span>
+				<span class="show_unit">单  位：500g</span>
+			</div>
+			<div class="goods_num clearfix">
+				<div class="num_name fl">数 量：</div>
+				<div class="num_add fl">
+					<input type="text" id="num_show" class="num_show fl" :value="counts" id="counts">
+					<a href="javascript:;" class="add fr" @click="changeNum(1)">+</a>
+					<a href="javascript:;" class="minus fr" @click="changeNum(-1)">-</a>	
+				</div> 
+			</div>
+            
+
+			<div class="total" >总价:&yen;{{total}}</div>
+			<div class="operate_btn">
+                <input type='hidden' name='csrfmiddlewaretoken' value='xuLccn44vOS5LUFlJQSjbjIvEHpmmf1n' />
+				<!-- <a href="javascript:;" class="buy_btn">立即购买</a> -->
+				<a href="javascript:void(0)" sku_id="1" class="add_cart" id="add_cart"@click="addCart">加入购物车</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="main_wrap clearfix">
+		<div class="l_wrap fl clearfix">
+			<div class="new_goods">
+				<h3>所属店铺</h3>
+				<ul>
+                    
+					<li>
+						<a href="#"><img src="images/pic1.jpg"></a>
+						<div><h4>店铺名称:</h4><span></span></div>
+						
+					</li>
+					
+					
+				</ul>
+			</div>
+		</div>
+
+		<div class="r_wrap fr clearfix">
+			<ul class="detail_tab clearfix">
+				<li id='tag_detail' class="active">商品介绍</li>
+			
+			</ul>
+
+			<div class="tab_content" id="tab_detail">
+				<dl>
+					<dt>商品详情：</dt>
+                    <dd><p><strong>很不错的草莓</strong></p></dd>
+				</dl>
+			</div>
+
+            <div class="tab_content" id="tab_comment" style="display: none">
+				<dl>
+                    
+				</dl>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    
+    
+	<div class="add_jump"></div>
+	
+	
+	<div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div>
+<script type="text/javascript" src="js/basic.js"></script>
+<script>
+function showMsg(msg,color,callback){
+	$("#popup_info").text(msg).css("color",color);
+	$(".popup_con").fadeIn('fast',function(){
+		setTimeout(function() {
+			$(".popup_con").fadeOut('fast',callback);
+		}, 2000);
+		
+	})
+}
+
+
+	let app = new Vue ({
+		el:"#goods_details",
+		data:{
+			goods:{},
+			pics:[],
+			gid:"",
+			counts:1,
+			total: 0,
+		},
+		mounted: function(){
+			
+			let gid = location.search;
+			
+			gid = gid.replace("?","");
+			this.gid=gid;
+		
+			if(gid == ""){
+				location.href="index.html";
+				return;
+			}
+		
+			axios.post("goods",qs.stringify({op:"findByGid",gid:gid})).then(rt =>{
+				if(rt.status == 200 && rt.data.code == 200){
+					
+					this.goods = rt.data.data;
+					this.pics=this.goods.pics.split(';');
+					
+					this.total=this.counts * this.goods.price;
+				}else{
+					location.href="index.html";
+				}
+				
+			})
+		},
+		methods:{
+			changeNum: function(num){
+				//console.info(num+"\t"+ index);
+				
+				this.counts +=num;
+				this.total=this.counts * this.goods.price;
+				if(this.counts< 1){
+					this.counts=1;
+					this.total=this.counts * this.goods.price;
+					return;
+				}
+			},
+			addCart: function(){
+				if(!header.$data.onlogin){
+					showMsg("请先登录...","red", function(){location.href='login.html'});
+					return;			
+				}
+				console.log(header.$data.memberInfo.mid+"11");
+				axios.post("cart",qs.stringify({op:"res", gid:this.gid})).then(rt=>{
+					console.log(rt);
+					if(rt.status == 200 && rt.data.code == 200){
+						axios.post("cart",qs.stringify({op:"add",gid:this.gid, num:this.counts})).then(rt =>{
+							console.log(rt);
+							if(rt.status == 200 && rt.data.code == 200){		
+									location.href = "shopcart.html";
+							}else{
+								showMsg("加111入失败，请稍后重试...","red");
+							}
+						})
+					}else{
+						axios.post("cart",qs.stringify({op:"update",gid:this.gid, num:this.counts})).then(rt =>{
+							if(rt.status == 200 && rt.data.code == 500){
+									location.href = "shopcart.html";
+							}else{
+								showMsg("加入失败，请稍后重试...","red");
+							}
+						})
+						
+					}
+				})
+				
+				
+			}
+		}
+		
+	})
+    // 手动输入商品的数量
+    $('#num_show').blur(function () {
+        // 获取用户输入的数目
+      app.counts = $(this).val();
+        //console.log(Numbers(app.counts));
+        // 校验count是否合法
+        if (Numbers(app.counts) || app.counts == 0 ||app.counts=="" ){
+        	app.counts = 1
+        	
+        }
+        // 重新设置商品总价
+        app.total=app.counts * app.goods.price;
+    })
+
+function Numbers(obj){
+	var regnum = /^[0-9]*$/;
+
+
+	if(regnum.test(obj)){
+		
+		return false;
+	}else{
+		//手机号格式有误
+		return true;
+	}
+}
+	</script>
+
+</body>
+</html>

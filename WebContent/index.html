@@ -1,0 +1,345 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-首页</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	
+
+
+	<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+	<script type="text/javascript"src="js/slide.js"></script>	
+	
+
+</head>
+<body>
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="person.html">用户中心</a>
+					<span>|</span>
+					<a href="shopcart.html">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+
+
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="search_con fl">
+           
+            <input type="text" class="input_text fl" name="q" placeholder="搜索商品" value="">
+            <input type="button" onclick="findBys();" class="input_btn fr" name="" value="搜索">
+           
+		</div>
+		<div class="guest_cart fr">
+			<a href="shopcart.html" class="cart_name fl">我的购物车</a>
+			<div class="goods_count fl" id="show_count">0</div>
+		</div>
+	</div>
+
+
+
+
+	<div class="navbar_con">
+		<div class="navbar">
+			<h1 class="fl">全部商品分类</h1>
+			<ul class="navlist fl">
+				<h1 class="fl">活动商品</h1>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="center_con clearfix">
+		<ul class="subnav fl">
+            
+			    <li><a href="#model01" class="fruit">新鲜水果</a></li>
+            
+			    <li><a href="#model02" class="seafood">海鲜水产</a></li>
+            
+			    <li><a href="#model03" class="meet">猪牛羊肉</a></li>
+            
+			    <li><a href="#model04" class="egg">禽类蛋品</a></li>
+            
+			    <li><a href="#model05" class="vegetables">新鲜蔬菜</a></li>
+            
+			    <li><a href="#model06" class="ice">速冻食品</a></li>
+            
+		</ul>
+		<div class="slide fl">
+			<ul class="slide_pics">
+                
+				    <li><a href="javascript:findByname('3')" ><img src="images/1.bmp" alt="幻灯片"></a></li>
+                
+				    <li><a href="javascript:findByname('2')"><img src="images/2.bmp" alt="幻灯片"></a></li>
+                
+				    <li><a href="javascript:findByname('1')"><img src="images/3.bmp" alt="幻灯片"></a></li>
+                
+				    <li><a href="javascript:findByname('4')"><img src="images/4.bmp" alt="幻灯片"></a></li>
+                
+			</ul>
+			<div class="prev"></div>
+			<div class="next"></div>
+			<ul class="points"></ul>
+		</div>
+		<div class="adv fl">
+        
+		</div>
+	</div>
+
+    <div id="goods_data">
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model01">新鲜水果</h3>
+			
+			<a href="javascript:findByname('1')" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="images/1.jpg"></div>
+			<ul class="goods_list fl">
+                
+				<li v-for="good in goods1">
+					<a :href="'details.html?' +good.gid"><h4 style="line-height: 24px;">{{good.gname}}</h4>
+					<img :src="good.pics.split(';')[0]">
+					<div class="prize">&yen;{{good.price}}</div></a>
+				</li>
+				
+				
+				
+			</ul>
+		</div>
+	</div>
+    
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model02">新鲜蔬菜</h3>
+			
+			<a href="javascript:findByname('2')" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="images/21.jpg"></div>
+			<ul class="goods_list fl">
+                
+				<li v-for="good in goods2">
+					<a :href="'details.html?' +good.gid"><h4 style="line-height: 24px;">{{good.gname}}</h4>
+					<img :src="good.pics.split(';')[0]">
+					<div class="prize">&yen;{{good.price}}</div></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+    
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model03">海鲜水产</h3>
+			
+			<a href="javascript:findByname('3')" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="images/6.jpg"></div>
+			<ul class="goods_list fl">
+                
+				<li v-for="good in goods3">
+					<a :href="'details.html?' +good.gid"><h4 style="line-height: 24px;">{{good.gname}}</h4>
+					<img :src="good.pics.split(';')[0]">
+					<div class="prize">&yen;{{good.price}}</div></a>
+				</li>
+			</ul>
+		</div>
+	</div>
+    
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model04">猪牛羊肉</h3>
+			
+			<a href="javascript:findByname('4')" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="images/11.jpg"></div>
+			<ul class="goods_list fl">
+                <li v-for="good in goods4">
+					<a :href="'details.html?' +good.gid"><h4 style="line-height: 24px;">{{good.gname}}</h4>
+					<img :src="good.pics.split(';')[0]">
+					<div class="prize">&yen;{{good.price}}</div></a>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model05">禽类蛋品</h3>
+			
+			<a href="javascript:findByname('5')" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="images/16.jpg"></div>
+			<ul class="goods_list fl">
+               
+				<li v-for="good in goods5" >
+					<a :href="'details.html?' +good.gid"><h4 style="line-height: 24px;">{{good.gname}}</h4>
+					<img :src="good.pics.split(';')[0]">
+					<div class="prize">&yen;{{good.price}}</div></a>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+    
+	<div class="list_model">
+		<div class="list_title clearfix">
+			<h3 class="fl" id="model06">速冻食品</h3>
+			
+			<a href="javascript:findByname('6')" class="goods_more fr" id="fruit_more">查看更多 ></a>
+		</div>
+
+		<div class="goods_con clearfix">
+			<div class="goods_banner fl"><img src="images/26.jpg"></div>
+			<ul class="goods_list fl">
+                
+				<li v-for="good in goods6">
+					<a :href="'details.html?' +good.gid"><h4 style="line-height: 24px;">{{good.gname}}</h4>
+					<img :src="good.pics.split(';')[0]">
+					<div class="prize">&yen;{{good.price}}</div></a>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+</div>
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	<div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div>
+	<script type="text/javascript"src="js/vue.js"></script>
+	<script type="text/javascript"src="js/axios.js"></script>
+	<script type="text/javascript"src="js/qs.js"></script>
+	<script type="text/javascript"src="js/basic.js"></script>
+	
+ <script>	
+
+let goods_data = new Vue({
+	el:"#goods_data",
+	data:{
+		goods1:[],
+		goods2:[],
+		goods3:[],
+		goods4:[],
+		goods5:[],
+		goods6:[],
+		total:0,
+	},
+	
+	mounted: function(){
+		$(".input_text").val("");
+		axios.post("goods",qs.stringify({op:"findByTid",tid:'1'})).then(rt =>{
+			if(rt.status == 200){
+				
+				this.goods1 = rt.data.data;
+				
+			}
+		});
+		axios.post("goods",qs.stringify({op:"findByTid",tid:'2'})).then(rt =>{
+			if(rt.status == 200){
+				
+				this.goods2 = rt.data.data;
+				
+			}
+		});
+		axios.post("goods",qs.stringify({op:"findByTid",tid:'3'})).then(rt =>{
+			if(rt.status == 200){
+				
+				this.goods3 = rt.data.data;
+				
+			}
+		});
+		axios.post("goods",qs.stringify({op:"findByTid",tid:'4'})).then(rt =>{
+			if(rt.status == 200){
+				
+				this.goods4 = rt.data.data;
+				
+			}
+		});
+		axios.post("goods",qs.stringify({op:"findByTid",tid:'5'})).then(rt =>{
+			if(rt.status == 200){
+				
+				this.goods5 = rt.data.data;
+				
+			}
+		});
+		axios.post("goods",qs.stringify({op:"findByTid",tid:'6'})).then(rt =>{
+			if(rt.status == 200){
+				
+				this.goods6 = rt.data.data;
+				
+			}
+		});
+	}
+})
+
+
+function findByPage(index){
+	page = index;
+	axios.post("goods",qs.stringify({op:"finds",page:page, rows: rows})).then(rt =>{
+		if(rt.status == 200){
+			good_data.$data.goods = rt.data;
+		}
+	})
+}    
+function findBys(){
+	let ss= $(".input_text").val();
+	
+	location.href ="index2.html?name="+ss;
+}
+function findByname(ss){
+	location.href ="index2.html?tid="+ss;
+}
+    
+</script>   
+	
+</body>
+</html>

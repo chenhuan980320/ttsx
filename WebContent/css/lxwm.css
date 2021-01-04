@@ -1,0 +1,227 @@
+/* 以下是联系我们的样式 */
+.head-describle {
+  font-size: 3.1vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 3.75vw;
+  position: absolute;
+  top: 20.13vw;
+  left: 11.8vw;
+}
+.company {
+  margin-top: 3.3vw;
+  font-size: 1.6vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.3vw;
+}
+
+.lxwm {
+  margin-top: 163px;
+  margin-left: 151px;
+}
+.lxwm h1 {
+  font-size: 37px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(255, 32, 136, 1);
+  line-height: 36px;
+}
+.lxwm .company_name {
+  font-size: 24px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 49px;
+}
+.lxwm .address {
+  font-size: 21px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 45px;
+  opacity: 0.7;
+}
+.lxwm .address-item {
+}
+.inline_block {
+  display: inline-block;
+}
+.lxwm .address-item .img {
+  margin-right: 16px;
+  width: 30px;
+  display: inline-block;
+}
+.lxwm .address-item .img img {
+  width: 22px;
+  height: 22px;
+}
+.map {
+  margin: 120px 90px 0;
+}
+.map img {
+  width: 100%;
+}
+.join {
+  margin-left: 151px;
+  margin-top: 184px;
+}
+.join h1 {
+  font-size: 37px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(255, 31, 136, 1);
+  line-height: 36px;
+}
+.join .join_title {
+  font-size: 24px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 50px;
+  margin-top: 19px;
+}
+.join .join_ware {
+  font-size: 21px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 45px;
+  opacity: 0.7;
+  margin-top: 60px;
+}
+.join_chanel {
+  font-size: 24px;
+  font-family: SourceHanSansCN-Bold;
+  font-weight: bold;
+  color: rgba(51, 51, 51, 1);
+  line-height: 50px;
+}
+
+.hr_147 {
+  height: 1px;
+  background: rgba(51, 51, 51, 1);
+  opacity: 0.3;
+  /* margin-top: 84px;
+    margin-bottom: 193px; */
+  margin: 84px 147px 193px;
+}
+.cooperation {
+  margin-left: 10.7vw;
+  /* margin-bottom: 191px; */
+}
+.cooperation h1 {
+  font-size: 37px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(255, 31, 136, 1);
+  line-height: 36px;
+}
+.cooperation .cooperation_comnay {
+  font-size: 24px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 49px;
+  margin-top: 23px;
+  margin-bottom: 84px;
+}
+.cooperation_item {
+  font-size: 0;
+}
+
+.cooperation_item figure {
+  display: inline-block;
+  width: 33.3%;
+  margin: 0;
+  box-sizing: border-box;
+  background-clip: content-box;
+}
+.cooperation_item figure figcaption {
+  font-size: 21px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 41px;
+}
+.cooperation_item figure p {
+  font-size: 19px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 41px;
+  opacity: 0.7;
+  margin-top: 15px;
+  margin-bottom: 60px;
+}
+
+.purchase {
+  background: rgba(248, 248, 248, 1);
+  padding: 7.6% 0 8.8% 0;
+}
+.purchase h3 {
+  font-size: 2.3vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.3vw;
+  text-align: center;
+  margin-bottom: 5%;
+}
+.purchase_item_group {
+  display: inline-block;
+  margin-bottom: 30px;
+  width: 100%;
+  text-align: center;
+}
+.purchase_item {
+  display: inline-block;
+}
+.purchase_item .title {
+  width: 3.4vw;
+  height: 1.5vw;
+  padding: 4px 10px;
+  background: rgba(51, 51, 51, 1);
+  border-radius: 11px;
+  margin-right: 10px;
+  color: #ffffff;
+  margin-left: 46px;
+}
+.purchase_item .span {
+  font-size: 1.4vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.3vw;
+  opacity: 0.6;
+}
+
+
+
+.backTop {
+  width: 100%;
+  text-align: center;
+  margin-top: 5%;
+  margin-bottom: 9%;
+}
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+  .cooperation_item figure figcaption {
+    font-size: 19px;
+    font-family: SourceHanSansCN-Medium;
+    font-weight: 500;
+    color: rgba(51, 51, 51, 1);
+    line-height: 41px;
+  }
+  .cooperation_item figure p {
+    font-size: 17px;
+    font-family: SourceHanSansCN-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 41px;
+    opacity: 0.7;
+    margin-top: 15px;
+    margin-bottom: 60px;
+  }
+}

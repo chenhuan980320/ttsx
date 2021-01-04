@@ -1,0 +1,242 @@
+.head_describle {
+  position: absolute;
+  top: 11.2vw;
+  left: 9.5vw;
+  font-size: 3.1vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 3.7vw;
+}
+.detail {
+  font-size: 1.3vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(34, 24, 21, 1);
+  line-height: 2vw;
+  margin-top: 2vw;
+  margin-bottom: 5.9vw;
+}
+.new_person {
+  font-size: 1.25vw;
+  font-family: SourceHanSansCN-Bold;
+  font-weight: bold;
+  color: rgba(34, 24, 21, 1);
+  line-height: 1.7vw;
+  margin-bottom: 1.4vw;
+}
+.head_describle img {
+  width: 8.9vw;
+  height: 8.9vw;
+}
+.good_quick {
+  margin: 0 5%;
+  position: relative;
+}
+.good_quick img {
+  width: 100%;
+  display: inline-block;
+}
+.good_quick_introduction {
+  position: absolute;
+  bottom: 8.3vw;
+  right: 5.3vw;
+}
+.good_quick_introduction h3 {
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.2vw;
+}
+.good_quick_introduction p {
+  margin-top: 2vw;
+  font-size: 1.45vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2vw;
+}
+
+.purchase {
+  margin: 0 5%;
+  margin-top: 8.3vw;
+  text-align: center;
+}
+.purchase h1 {
+  font-size: 37px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+  margin-bottom: 20xp;
+}
+.purchase p {
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+  margin-bottom: 4.6vw;
+}
+.purchase_img {
+  position: relative;
+}
+.purchase_img img {
+  width: 100%;
+}
+.purchase_img_item {
+  position: absolute;
+  top: 9vw;
+  left: 6vw;
+  text-align: left;
+}
+.purchase_img h5 {
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2.1vw;
+  margin-bottom: 1.5vw;
+}
+.purchase_img p {
+  margin: 0;
+  font-size: 21px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 2vw;
+}
+.purchase_img p:last-child {
+  margin-top: 3vw;
+}
+.product_control {
+  margin: 0 5%;
+  margin-top: 7.8vw;
+  text-align: center;
+}
+.product_control h1 {
+  font-size: 37px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+  margin-bottom: 20xp;
+}
+.product_control p {
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+  margin-bottom: 4.6vw;
+}
+.product_control span {
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+  margin-bottom: 4.6vw;
+}
+.product_control img {
+  width: 100%;
+}
+.product_control_info {
+  text-align: left;
+  margin-top: 3.5vw;
+  display: inline-block;
+}
+.hr {
+  background: #aaaaaa;
+  height: 1px;
+  margin-bottom: 5.6vw;
+  margin: 0 10.9vw 5.6vw;
+}
+.step {
+  margin: 0 17.6vw 6vw;
+  text-align: center;
+}
+.step img {
+  width: 100%;
+}
+.step2 {
+  margin: 0 7.6vw 0;
+}
+.step2 img {
+  width: 100%;
+}
+.guarantee {
+  margin: 0 5%;
+  text-align: center;
+}
+.guarantee h1 {
+  margin-top: 8.8vw;
+  font-size: 38px;
+  font-family: SourceHanSansCN-Medium;
+  font-weight: 500;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+}
+.guarantee p {
+  margin-top: 1.4vw;
+  font-size: 24px;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+}
+.guarantee img {
+  width: 100%;
+  display: inline-block;
+  margin: 5vw 0 2.7vw 0;
+}
+
+.guarantee span {
+  font-size: 1.7vw;
+  font-family: SourceHanSansCN-Regular;
+  font-weight: 400;
+  color: rgba(51, 51, 51, 1);
+  line-height: 40px;
+  /* margin-bottom: 4.6vw; */
+}
+.product_guarantee_info{
+  text-align: left;
+  display: inline-block;
+}
+.cooperation{
+  text-align: center;
+  margin: 7.6vw 0 4.4vw 0;
+  font-size:38px;
+  font-family:SourceHanSansCN-Medium;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  line-height:40px;
+}
+.cooperation_img{
+  background: #F8F8F8;
+  padding: 7.9vw 10.5vw 9.7vw;
+  text-align: center;
+}
+.cooperation_img img{
+  width: 100%;
+  display: inline-block;
+}
+.backTop {
+  margin-top: 9%;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 5%;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .purchase_img p {
+    margin: 0;
+    font-size: 15px;
+    font-family: SourceHanSansCN-Regular;
+    font-weight: 400;
+    color: rgba(51, 51, 51, 1);
+    line-height: 2vw;
+  }
+} 

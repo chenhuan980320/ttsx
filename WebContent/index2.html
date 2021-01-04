@@ -1,0 +1,220 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-首页</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+
+
+	<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="js/slide.js"></script>
+	<script type="text/javascript" src="js/showpic.js"></script>
+	<style>
+		.index_goods1{
+			margin-left:96px;
+			margin-top:30px;
+			display:inline-block;
+			width: 180px; 
+			border: 2px solid #ccc;
+		}
+		.index_goods1:hover {
+   	 		border: 2px solid #ff8000;
+		}
+
+		
+		.navbar_a{width:100px;height:40px;line-height:40px;text-align: center;font-size:14px;color:#fff;background-color:#39a93e;}
+		.navbar_a2{width:100px;height:40px;line-height:40px;text-align: center;font-size:20px;color:#fff;background-color:#ff8000;}
+		.index_sname{
+			width: 180px;
+			color: #9b9b9b;
+			border-top: 1px solid #f2f2f2;
+			
+		}
+		.navbar_con_px{
+			height:30px;
+			line-height:30px;
+			border-bottom:2px solid #39a93e;
+			margin: auto;
+			}
+		.index2_price{
+			width: 50px;
+			
+		}
+	</style>
+
+</head>
+<body>
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="person.html">用户中心</a>
+					<span>|</span>
+					<a href="shopcart.html">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+</div>
+
+
+<div id="goods_data" style="width: 1200px; margin:auto">
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="search_con fl">
+            <form method="get" action="/search">
+                <input type="text" class="input_text fl" name="q" v-model="name" placeholder="搜索商品" >
+                <input type="button" class="input_btn fr" name="" value="搜索" @click="findBys">
+            </form>
+		</div>
+		<div class="guest_cart fr">
+			<a href="shopcart.html" class="cart_name fl">我的购物车</a>
+			
+		</div>
+	</div>
+	
+	<div class="navbar_con">
+		<div class="navbar" ><!--<div class="goods_count fl" id="show_count"> </div> :href="'details.html?' +good.gid" -->
+			<a class="navbar_a fl" href="javascript:void(0)" v-for="(type,index) in types" v-bind:class="{ navbar_a2:index==current}" @click="addClass(index,type.tid)">{{type.tname}}</a>
+		</div>
+	</div>
+ 	<div class="navbar_con_px">
+ 		价格区间: &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" v-model="pricemin" onkeyup="isnumber(this)" class="index2_price"/>-<input class="index2_price" type="text" v-model="pricemax" onkeyup="isnumber(this)"/>
+ 		<select v-model="paixu" @click="findBys()">
+ 		<option value="">默认排序</option>
+ 		<option value="1">销量升序</option>
+ 		<option value="2">销量降序</option>
+ 		<option value="3">价格升序</option>
+ 		<option value="4">价格降序</option>	 <!-- 1销量升序  2 销量降序 3价格升序4价格降序 --> 
+ 		</select>
+ 	</div>
+	<div v-for="good in goods" class="index_goods1" >
+		<a :href="'details.html?' +good.gid"  style="display:inline-block;width: 180px;">
+		<img :src="good.pics.split(';')[0]" width="180px" height="180px"/>	
+		<span style="text-align: center;display:block;color: #9b9b9b;">{{good.gname}}</span>
+		<span style="line-height: 25px; font-size: 18px;color: #fd3f31;">&nbsp;&nbsp;&nbsp;&yen;{{good.price}}</span>
+		<div class="index_sname" >店铺:&nbsp;{{good.sname}}</div>
+		<div class="index_sname" >销量:&nbsp;{{good.volume}}</div></a>
+	</div>
+
+
+</div>
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	<script type="text/javascript"src="js/vue.js"></script>
+	<script type="text/javascript"src="js/axios.js"></script>
+	<script type="text/javascript"src="js/qs.js"></script>
+	<script type="text/javascript"src="js/basic.js"></script>
+ <script>	
+
+let goods_data = new Vue({
+	el:"#goods_data",
+	data:{
+		goods:{},
+		types:{},
+		str:"",
+		tid:"",
+		name:"",
+		pricemin:"",
+		pricemax:"",
+		paixu:"",
+		current:0,//默认哪个有类名
+	},
+	
+	mounted: function(){
+		let str = location.search;
+		
+		str = str.replace("?","");
+		var newarr = str.split("=");
+		if(newarr[0]=="name"){
+			this.name=newarr[1];
+		}
+		if(newarr[0]=="tid"){
+			this.addClass(newarr[1],newarr[1]);
+			
+		}
+		
+		axios.post("type",qs.stringify({op:"finds"})).then(rt =>{
+				let obj = {tname : "全部类型"};
+				rt.data.unshift(obj);
+				this.types = rt.data;
+				
+				console.log( this.types);
+		
+		});
+		
+		axios.post("goods",qs.stringify({op:"findBys",tid:this.tid,name:this.name,pricemin:this.pricemin,pricemax:this.pricemax,paixu:this.paixu})).then(rt =>{
+			if(rt.status == 200){
+				console.log( rt.data);
+				this.goods = rt.data;
+				
+			}
+		});
+		
+		
+		
+	},
+	methods:{
+		addClass(index,tid){
+			console.log("xxxx");
+		　　　　  this.current=index
+		      this.tid=tid;
+		      this.findBys();
+		　　　　},
+		findBys(){
+			axios.post("goods",qs.stringify({op:"findBys",tid:this.tid,name:this.name,pricemin:this.pricemin,pricemax:this.pricemax,paixu:this.paixu})).then(rt =>{
+				if(rt.status == 200){
+					
+					this.goods = rt.data;
+					
+				}
+			});
+		　　　　}
+		
+	}
+})
+
+
+function findByPage(index){
+	page = index;
+	axios.post("goods",qs.stringify({op:"finds",page:page, rows: rows})).then(rt =>{
+		if(rt.status == 200){
+			good_data.$data.goods = rt.data;
+		}
+	})
+}    
+
+
+
+</script>   
+	
+</body>
+</html>

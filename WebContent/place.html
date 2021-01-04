@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-用户中心</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="css/basic.css" type="text/css" />
+    
+</head>
+<body>
+
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="person.html">用户中心</a>
+					<span>|</span>
+					<a href="shopcart.html">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+
+
+
+<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		
+</div>
+
+
+
+
+    <div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="person.html" >· 个人信息</a></li>
+				<li><a href="order.html" >· 全部订单</a></li>
+				<li><a href="place.html" class="active">· 收货地址</a></li>
+			</ul>
+		</div>
+        
+        
+		<div class="right_content clearfix">
+				<h3 class="common_title2">收货地址</h3>
+				<div class="site_con">
+					<dl>
+						<dt>当前地址：</dt>
+                        
+                            <dd>无默认地址</dd>
+                        
+                    </dl>
+				</div>
+				<h3 class="common_title2">编辑地址</h3>
+				<div class="site_con">
+				
+                        <input type='hidden' name='csrfmiddlewaretoken' value='xuLccn44vOS5LUFlJQSjbjIvEHpmmf1n' />
+						<div class="form_group">
+							<label>收件人：</label>
+							<input type="text" id="place_pname" name="place_pname" v-model="pname">
+						</div>
+						<div class="form_group">
+							<label>详细地址：</label>
+							<select id="place_province" style="width:90px" v-model="provice"></select>
+							<select id="place_city" style="width:90px" v-model="city"></select>
+							<select id="place_area" style="width:90px" v-model="area"></select>
+							<input id="place_addr" type="text" placeholder="请输入详细地址..." v-model="addr" />
+						</div>
+						
+						<div class="form_group">
+							<label>手机：</label>
+							<input type="text" v-model="tel"name="tel" id="utel"onblur="vaTel()">
+							<font color="red"><span id="telDiv"></span></font>
+						</div>
+						<input type="button" value="提交" class="info_submit" @click="add">
+					
+				</div>
+		</div>
+
+    </div>
+</div>
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+	<div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/qs.js"></script>
+<script type="text/javascript" src="js/addr2.js"></script>
+<script type="text/javascript">
+var mid="";
+let header = new Vue({
+	el:"#header",//这个vue对象的作用范围
+	data:{
+		onlogin: false,//是否登陆
+		memberInfo:{} , //当前登陆对象
+		pname: "",
+		provice: "",
+		city: "",
+		area: "",
+		addr: "",
+		tel: "",
+	},
+	mounted:function(){//vue渲染完成后要执行的方法
+		
+		$("#info_con input").attr("disabled","true");
+		//发送一个请求去获取用户登陆信息
+		axios.get("member",{params:{op:"check1"}}).then( rt => {
+		
+			if(rt.status ==200 && rt.data.code ==200){//说明成功
+				this.onlogin = true;  
+				//console.log(this.memberInfo);
+				this.memberInfo = rt.data.data;
+				mid=this.memberInfo.mid;
+				
+				console.log(this.memberInfo);
+			}else{
+				this.onlogin = false;  
+				this.memberInfo = {};
+			}
+			if(!this.onlogin){
+				showMsg("请先登录...","red", function(){location.href='login.html'});
+				return;			
+			}
+		})
+	},
+	methods:{
+		
+		add: function(){
+			if(this.pname == "" || this.provice == "" || this.city == "" || this.area == "" || this.addr == "" || !vaTel()){
+				showMsg("您输入的信息不完整，请确认后重新提交...","red");
+				return;
+			}
+			axios.post("place", qs.stringify({op:"add",mid:mid,pname:this.pname, province:this.provice, city:this.city, area:this.area, addr:this.addr, tel:this.tel,status:1})).then(rt=>{
+				if(rt.status == 200 && rt.data.code == 200){
+					
+					showMsg("添加成功","green",function(){location.href='place.html'});
+					return;
+				}
+				showMsg("添加失败","red");
+			})
+		}
+	}
+	
+})
+
+function showMsg(msg,color,callback){
+	$("#popup_info").text(msg).css("color",color);
+	$(".popup_con").fadeIn('fast',function(){
+		setTimeout(function() {
+			$(".popup_con").fadeOut('fast',callback);
+		}, 2000);
+		
+	})
+}
+function excel(){
+	$.post("member", {op:"excel"},data =>{
+				location.href='login.html';
+		},"json");
+}
+
+//验证电话号码
+function vaTel(){
+	var regtel = /^[1][3,5,7,8][0-9]{9}$/;
+	var tel= document.getElementById("utel").value;
+	var telDiv = document.getElementById("telDiv");
+	var utel = document.getElementById("utel");
+	if(regtel.test(tel)){
+		telDiv.innerHTML ="";
+		utel.setAttribute("class","green");
+		return true;
+	}else{
+		telDiv.innerHTML = "手机号格式有误";
+		utel.setAttribute("class","red");
+		return false;
+	}
+}
+
+
+</script> 
+<script>
+bindAddr("xml/city.xml");
+</script>
+</body>
+</html>

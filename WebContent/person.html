@@ -1,0 +1,245 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    
+	<title>天天生鲜-用户中心</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<style>
+	.person_span{
+	width: 100px;
+	display:inline-block 
+	}
+	#show_member_photo{
+	float: left;
+	width: 100px;
+	height 100px; 
+	
+	top: 0px;
+	right: 50px;
+	
+}
+
+#person_update{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background:url("image/update.png");
+}
+#person_update:hover{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background:url("image/update2.png");
+}
+#person_preservation{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background:url("image/preservation.png");
+}
+#person_preservation:hover{
+	display: inline-block;
+	width: 64px;
+	height: 64px;
+	background:url("image/preservation2.png");
+}
+</style>
+    
+</head>
+<body>
+
+<div id="header">
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜!</div>
+			<div class="fr">               
+				<div class="login_btn fl">
+					<a v-if="onlogin"class="yellowd1" rel="nofollow" href="#"target="_blank">用户名:&nbsp;&nbsp;{{memberInfo.nickName}}</a>
+					<a v-else class="yellowd1" rel="nofollow"href="login.html"target="_blank">请登录</a>
+                    <span>|</span>
+					<a href="javascript:excel()">退出</a>
+				</div>                
+				<div class="user_link fl">
+					<span>|</span>
+					<a href="person.html">用户中心</a>
+					<span>|</span>
+					<a href="shopcart.html">我的购物车</a>
+					<span>|</span>
+					<a href="/user/order/1">我的订单</a>
+				</div>
+			</div>
+		</div>		
+	</div>
+
+
+
+
+	<div class="search_bar clearfix">
+		<a href="index.html" class="logo fl"><img src="images/logo.png"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		
+	</div>
+
+
+
+
+    <div class="main_con clearfix" id="Myinfo">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3><!-- <img src="" alt="" style="width: 100px; height: 100px;"/> -->
+			<ul><li></li>
+				<li><a href="person.html" class="active">· 个人信息</a></li>
+				<li><a href="order.html" >· 全部订单</a></li>
+				<li><a href="place.html" >· 收货地址</a></li>
+			</ul>
+		</div>
+        
+        
+		<div class="right_content clearfix">
+				<div class="info_con clearfix" id="info_con">
+				<h3 class="common_title2">基本信息</h3>
+						<ul class="user_info_list">
+							<li id="show_member_photo"><img :src="memberInfo.photo" width="100px" height="100px"></li><input style="margin-left: 80px;" type="file" id="person_photo" name="photo"  onchange ="setImagePreviews(this,'show_member_photo')"/>
+							<li><span class="person_span">用户名：</span><input id="pname"  v-model="memberInfo.nickName" type="text"/></li>
+                            <li><span class="person_span">联系电话：</span><input id="ptel" v-model="memberInfo.tel" type="text"/></li>
+                            <li><span class="person_span">email：</span><input id="pemail" v-model="memberInfo.email" type="text"/></li>
+							
+                           
+						</ul>
+						<a id="person_update" href="javascript:showAdd()"  ></a>
+						<a id="person_preservation" href="javascript:preservation()"  ></a>
+				</div>
+				
+			
+					
+		</div>
+	</div>
+</div>
+    
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    
+    <div class="popup_con">
+	<div class="popup">
+		<p id="popup_info"></p>
+	</div>
+</div>
+<script type="text/javascript" src="js/showpic.js"></script>
+<script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="back/js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/qs.js"></script>
+
+<script type="text/javascript">
+var mid="";
+var isupdate=false;
+let header = new Vue({
+	el:"#header",//这个vue对象的作用范围
+	data:{
+		onlogin: false,//是否登陆
+		memberInfo:{} , //当前登陆对象
+		
+	},
+	mounted:function(){//vue渲染完成后要执行的方法
+		isupdate=false;
+		$("#info_con input").attr("disabled","true");
+		//发送一个请求去获取用户登陆信息
+		axios.get("member",{params:{op:"check1"}}).then( rt => {
+		
+			if(rt.status ==200 && rt.data.code ==200){//说明成功
+				this.onlogin = true;  
+				//console.log(this.memberInfo);
+				this.memberInfo = rt.data.data;
+				mid=this.memberInfo.mid;
+				
+				//console.log(this.memberInfo);
+			}else{
+				this.onlogin = false;  
+				this.memberInfo = {};
+			}
+			if(!this.onlogin){
+				showMsg("请先登录...","red", function(){location.href='login.html'});
+				return;			
+			}
+		})
+	},
+	methods:{
+		findByTid: function(tid){
+			console.info(tid);
+		}
+	}
+	
+})
+
+function showMsg(msg,color,callback){
+	$("#popup_info").text(msg).css("color",color);
+	$(".popup_con").fadeIn('fast',function(){
+		setTimeout(function() {
+			$(".popup_con").fadeOut('fast',callback);
+		}, 2000);
+		
+	})
+}
+function excel(){
+	$.post("member", {op:"excel"},data =>{
+				location.href='login.html';
+		},"json");
+
+		
+	}
+
+function showAdd(){
+	isupdate=true;
+	$("#info_con input").removeAttr("disabled");
+	
+}
+function preservation(){
+	if(!isupdate){
+		return;
+	}
+	var nickName=$.trim($("#pname").val());
+	
+	var email=$.trim($("#pemail").val());
+	var tel=$.trim($("#ptel").val());
+	var obj = { mid:mid,tel:tel,nickName:nickName,email:email,status:1}
+	
+	$.ajaxFileUpload({
+		url:"member?op=update",//注意 字节流   op必须拼接在地址栏  否则后台无法request获取
+		secureuri:false,
+		fileElementId:["person_photo"],//所有file文本框的ID
+		dataType:"json",//数据格式
+		data: obj,//要发送的数据
+		success: function(data,status){
+		
+			if(data.code ==200){
+				showMsg("修改成功！！","green",function(){location.href='person.html'});
+			
+			}else{
+				showMsg("修改失败！！","red");
+			}
+		},
+		error:function(data,status,e){
+			showMsg("错误！！","reg");
+		}
+	});
+}
+</script>
+	
+</body>
+</html>

@@ -1,0 +1,123 @@
+<table id="types_data" data-options = "fit:true"></table>
+
+<script >
+var types_status_obj=[{id:0,name:"已下架"},{id:1,name:"在架"}]
+var types_index = undefined;  //用来记录当前正在呗编辑的行
+var types_op;
+var types_info;
+var types_obj = $('#types_data').datagrid({
+	url:'../../type',
+	queryParams:{op:"findByPage"},
+	fitColumns:true,
+	striped:true,//设置为true将交替显示行背景。
+	loadMsg:"数据加载中...",//当从远程站点载入数据时，显示的一条快捷信息。
+	pagination:true,
+	rownumbers:true,
+
+	pageSize: 5,
+	singleSelect:true,
+	pageList: [1,2,5,10,20,30,40,50],
+	sortName: "tid",
+	remoteSort: false,
+	columns:[[
+		{field:'tid',title:'类型编号',width:100,align:'center',sortable:"true"},
+		{field:'tname',title:'类型名称',width:100,align:'center', editor:{type:"text",options:{required:true}}},
+		{field:'status',title:'类型状态',width:100,align:'center',formatter:function(val,row,index){
+			if(val ==0){
+				return'<font color="red">下架</font>';
+			}else{
+				return'<font color="green">在架</font>';
+			}		
+		}, editor:{type:"combobox",options:{required:true,valueField:"id",textField:"name", data:types_status_obj}}}
+											//   		传递到后台服务器用的值的属性   显示在界面上给用户看到        这数据来源哪个集合对象
+		]],
+	toolbar: [{
+		iconCls: 'icon-add',
+		text:"添加",
+		handler: function(){
+			types_op = "add";
+			types_info = "添加";
+			if(types_index != undefined){
+				return;//说明正在被编辑的行
+			}
+			//在表格的最前面插入一行
+			types_obj.datagrid('insertRow',{ index: 0, row: {}});
+			types_index = 0;
+			types_obj.datagrid('beginEdit',types_index); //开始编辑指定行
+		}
+	},'-',{
+		iconCls: 'icon-edit',
+		text:"修改",
+		handler: function(){
+			types_op = "update";
+			types_info = "修改";
+			//如果没有被编辑的行，则直接返回
+			if(types_index != undefined){
+				return;
+			}
+			
+			//获取选中的行
+			var row = types_obj.datagrid('getSelected');
+			if(row == null){
+				//说明没有选中行
+				$.messager.show({title:'温馨提示',msg:'请选择你要修改的商品类型...',timeout:2000,showType:'slide'});
+				return;
+			}
+			
+			//获取选中的行
+			types_index = types_obj.datagrid('getRowIndex',row);
+			//开启编辑
+			types_obj.datagrid('beginEdit',types_index);
+			
+		}
+	},'-',{
+		iconCls: 'icon-save',
+		text:"保存",
+		handler: function(){
+			//如果没有被编辑的行，则直接返回
+			if(types_index == undefined){
+				return;
+			}
+			
+			types_obj.datagrid('endEdit',types_index);//先结束编辑
+			var row = types_obj.datagrid("getChanges")[0];
+			
+			if(row == undefined){
+				types_index = undefined;
+				return;
+			}
+			
+			
+			// 这个是返回所有被修改的行数据，但是我们这里每次只允许编辑一行，所以我去第一行被修改的数据即可
+			//此时 row 是一个Object,那么js中 如何在对象中添加属性？
+			//row.op = "add";//row["op"]="add"
+			row.op=types_op;
+			//讲这一行数据发送到后台，插入到数据库中
+			//$.post("../../type",row,function(data){},"json");
+			$.post("../../type",row,data=>{
+				
+				if(data.code == 200){
+					$.messager.show({title:'成功提示',msg:'商品类'+types_info+'成功...',timeout:2000,showType:'slide'})
+					//刷新页面数据
+					types_obj.datagrid("reload");//从新加载数据   从新分页
+				}else{
+					//如果没有成功
+					types_obj.datagrid("rejectChanges");
+					$.messager.alert('失败提示','商品类'+types_info+'失败','error')
+				}
+				row = null;
+				types_index = undefined;
+			},"json")
+		}
+	},'-',{
+		iconCls: 'icon-undo',
+		text:"撤销",
+		handler: function(){
+			types_index = undefined;
+			types_obj.datagrid("rejectChanges");
+		}
+	}]
+
+	
+})
+</script>

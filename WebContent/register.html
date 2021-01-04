@@ -1,0 +1,298 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+   
+	<title>天天生鲜-注册</title>
+	<link rel="stylesheet" type="text/css" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" type="text/css" href="css/basic.css">
+    <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+		
+</head>
+<style>
+
+
+
+</style>
+<body>
+<div id="header">
+	<div class="register_con">
+		<div class="l_con fl">
+			<a class="reg_logo"><img src="picture/logo02.png"></a>
+			<div class="reg_slogan">足不出户  ·  新鲜每一天</div>
+			<div class="reg_banner"></div>
+		</div>
+
+		<div class="r_con fr">
+		
+			<div class="reg_title clearfix">
+				<h1>用户注册</h1>
+				<a href="login.html">登录</a>
+			</div>
+			<div class="reg_form clearfix" id="register">
+			
+                    <input type='hidden' name='csrfmiddlewaretoken' value='YPtl6eqfRUMmHdvhMglVoNSYbcQIb7vy'>
+				<ul>
+					<li>
+						<label>用户名:</label>
+						<input type="text"v-model="nickName" name="user_name" id="uname" onblur="validateUsername2()">
+						<font color="red"><span id="usernameDiv"></span></font>
+					</li>	
+					<div id=""></div>				
+					<li>
+						<label>密码:</label>
+						<input type="password"v-model="pwd" name="pwd" id="uword"onblur="validatePassword2()">
+						<font color="red"><span id="passwordDiv"></span></font>
+					</li>
+					<li>
+						<label>确认密码:</label>
+						<input type="password" v-model="againpwd"name="again" id="again"onblur="validatePassword3()">
+						<font color="red"><span id="againDiv"></span></font>
+					</li>
+					
+					<li>
+						<label>手机号:</label>
+						<input type="text" v-model="tel"name="tel" id="utel"onblur="vaTel()">
+						<font color="red"><span id="telDiv"></span></font>
+					</li>
+					<li>
+						<label>邮箱:</label>
+						<input type="text" v-model="email"name="email" id="uemail"onblur="vaEmail()">
+						<font color="red"><span id="emailDiv"></span></font>
+					</li>
+					<li>
+						<label>验证码:</label>
+						<input type="text" id="btn-compare" onclick="doCompareEmailCode()"style="width: 180px">
+						<input type="button" value="发送验证码"id="btn-get"onclick="doGetEmailCode()"style="width: 100px"font-color="red">
+						<font color="red"><span id="emailDiv"></span></font>
+					</li>
+					
+					<li class="agreement">
+						<input type="checkbox" name="allow" id="allow" checked="checked">
+						<label>同意”天天生鲜用户使用协议“</label>
+						<span class="error_tip2">提示信息</span>
+					</li>
+					<li class="reg_sub">
+					 <input id="button" value="注册" text-align="center"href="javascript:void(0)" @click="reg">
+					 
+					 
+										 
+					</li>
+					
+				</ul>				  
+			</div>
+				
+		</div>
+	
+
+	</div>
+</div>
+
+<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>CopyRight © 2016 北京天天生鲜信息技术有限公司 All Rights Reserved</p>
+		<p>电话：010-****888    京ICP备*******8号</p>
+	</div>
+    <div class="popup_con">
+		<div class="popup">
+			<p id="popup_info"></p>
+		</div>
+	</div>
+<link rel="stylesheet" href="css/basic.css" />
+<script type="text/javascript" src="js/vue.js"></script>
+<script type="text/javascript" src="js/axios.js"></script>
+<script type="text/javascript" src="js/qs.js"></script> 
+
+ <script type="text/javascript">
+ 
+ 
+ 
+ function showMsg(msg,color,callback){
+		$("#popup_info").text(msg).css("color",color);
+		$(".popup_con").fadeIn('fast',function(){
+			setTimeout(function() {
+				$(".popup_con").fadeOut('fast',callback);
+			}, 2000);
+			
+		})
+	}
+// 验证用户名
+function validateUsername2(){
+	// 获取用户名
+	var name = document.getElementById("uname").value;
+	var uname = document.getElementById("uname");
+	var usernameDiv = document.getElementById("usernameDiv");
+	
+	if(name.length<4){
+		uname.setAttribute("class","red");
+		usernameDiv.innerHTML="用户名必须为4-16位字符，请重新填写";
+		return false;
+		
+	}else{
+		uname.setAttribute("class","green");
+		usernameDiv.innerHTML="";	
+		return true;		
+	}
+}
+ 
+ 
+
+// 验证密码
+function validatePassword2(){
+	var password = document.getElementById("uword").value;
+	var password2 = document.getElementById("uword");
+	var passwordDiv = document.getElementById("passwordDiv");
+	if(password.length >= 6){
+		password2.setAttribute("class","green");
+		passwordDiv.innerHTML="";	
+		return true;
+		
+	}else{
+		password2.setAttribute("class","red");
+		passwordDiv.innerHTML="密码不能少于6位";	
+		return false;		
+	}	
+	
+}
+
+//验证确认密码
+function validatePassword3(){
+	var password = document.getElementById("uword").value;
+	var again = document.getElementById("again").value;
+	var again2 = document.getElementById("again");
+	var againDiv = document.getElementById("againDiv");
+	if(password == again){
+			again2.setAttribute("class","green");
+			againDiv.innerHTML="";
+			return true;			
+		}else{
+			again2.setAttribute("class","red");
+			againDiv.innerHTML="两次密码不一致";
+			return false;
+		}
+	
+}
+
+
+
+
+// 验证邮箱:使用正则表达式判断格式是否正确
+function vaEmail(){
+	var regex = /^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$/;
+	var email = document.getElementById("uemail").value;
+	var emailDiv = document.getElementById("emailDiv");
+	var uemail = document.getElementById("uemail");
+	if(regex.test(email)){
+		emailDiv.innerHTML ="";
+		uemail.setAttribute("class","green");
+		return true;
+
+	}else{
+		emailDiv.innerHTML = "邮箱格式错误";
+		uemail.setAttribute("class","red");
+		return false;
+	}
+}	
+
+//验证电话号码
+function vaTel(){
+	var regtel = /^[1][3,5,7,8][0-9]{9}$/;
+	var tel= document.getElementById("utel").value;
+	var telDiv = document.getElementById("telDiv");
+	var utel = document.getElementById("utel");
+	if(regtel.test(tel)){
+		telDiv.innerHTML ="";
+		utel.setAttribute("class","green");
+		return true;
+	}else{
+		telDiv.innerHTML = "手机号格式有误";
+		utel.setAttribute("class","red");
+		return false;
+	}
+}
+function doGetEmailCode() {
+	   var email = $("#uemail").val();//获取接收验证码的邮箱
+	   var url = "getEmailCode?toEmail=" + email;//地址与邮箱拼接
+	   $.get(url, function(result) {
+	    console.log("result", result); 
+	    });
+	} 
+function doCompareEmailCode() {
+	var codeid = $("#codeid").val();
+	var url = "checkEmailCode?code=" + codeid;
+    $.get(url, function(result) {
+    console.log(result);
+    });
+}
+
+
+
+let app = new Vue({
+	el:"#register",
+	data:{
+		nickName:"",
+		pwd:"",
+		againpwd:"",
+		tel:"",
+		email:"",
+		
+		
+	},
+	
+	methods:{
+		reg: function(){
+			//做校验
+			if(!validateUsername2()||!validatePassword2()||!validatePassword3()||!vaEmail()||!vaTel()){
+				
+				return;
+			}
+			//做校验
+			if(this.nickName==""||this.pwd==""|| this.againpwd==""||this.tel == ""||this.email == ""){
+				showMsg("您输入的信息不完整，请确认后重新提交...","red");
+				return;
+			}
+			
+			axios.post("member",qs.stringify({op:"reg",nickName:this.nickName,pwd:this.pwd,tel:this.tel,email:this.email,yzm:this.yzm,sf:"1",status:"1",photo:""})).then(rt =>{
+				if(rt.status == 200 && rt.data.code == 200){
+					showMsg("注册成功，请先登录...","green",function(){location.href='login.html'});
+					return;
+				}
+				showMsg("注册失败...","red");
+				
+			})
+		}
+		/*email2:function(){
+			//做校验
+			if(this.nickName==""||this.pwd==""|| this.againpwd==""||this.tel == ""||this.email == ""){
+				showMsg("您输入的信息不完整，请确认后重新提交...","red");
+				return;
+			}
+			axios.post("email",qs.stringify({op:"emailCode",email:this.email})).then(rt=>{
+				if(rt.email==200){
+					showMsg("邮件发送成功...","green");
+					return;
+				}
+				showMsg("邮件失败...","red");
+			})
+			
+		}*/
+		
+	}
+		
+})
+
+</script>   
+	
+</body>
+</html>

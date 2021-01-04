@@ -1,0 +1,326 @@
+<table id="member_data" data-options="fit:true"></table>
+<div id="member_search">
+	<a href="javascript:showAddMemberInfoDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true" style='float:left'>添加</a>
+	<div class="datagrid-btn-separator"></div>
+	
+	<label class="navy_lbl">账号编号:</label><input type="text" id="member_search_mid" class="navy_ipt200"style="width: 100px;" onkeyup="isnumber(this)">
+	<label class="navy_lbl">账号名称:</label><input type="text" id="member_search_name" class="navy_ipt200"style="width: 200px;">
+	<label class="navy_lbl">账号电话:</label><input type="text" id="member_search_tel" class="navy_ipt200"style="width: 100px;" onkeyup="isnumber(this)">
+	<label class="navy_lbl">账号邮箱:</label><input type="text" id="member_search_email" class="navy_ipt200"style="width: 200px;">
+	<label class="navy_lbl">账号状态:</label>
+	<select id ="member_search_status" class="navy_slt200" style="width: 100px;">
+		<option value="">--请选择--</option>
+		<option value="0">禁用</option>
+		<option value="1">正常</option>
+		
+	</select>
+	<label class="navy_lbl">账号身份:</label>
+	<select id ="member_search_sf" class="navy_slt200" style="width: 100px;">
+		<option value="">--请选择--</option>
+		<option value="1">会员</option>
+		<option value="2">商家</option>
+	</select>
+	<a href="javascript:searchMemberInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询</a>
+</div>
+<div id="member_dialog" class="easyui-dialog" data-options="resizable:true,modal:true,closed:true">
+<form id="member_form">
+	<ul>
+		<li><label for="member_dialog_mid">账户ID:</label><input type="text" id="member_dialog_mid" class="navy_ipt400" disabled/></li>
+		<li><label for="member_dialog_name">账户名称:</label><input type="text" id="member_dialog_name" class="navy_ipt400" /></li>
+		<li><label>账号身份:</label><select id="member_dialog_sf" class="navy_slt400">
+			<option value="1">会员</option>
+			<option value="2">商家</option>
+		</select></li>
+		<li><label>账号状态:</label><select id="member_dialog_status" class="navy_slt400" style="width: 100px;">
+			<option value="1">正常</option>
+			<option value="0">封禁</option>
+		</select></li>
+		
+		<li><label>联系电话:</label>
+			<input type="text" id="member_dialog_tel" class="navy_ipt400" />
+		</li>
+		<li><label for="member_dialog_email">注册邮箱:</label><input id="member_dialog_email" type="text" class="navy_ipt400" /></li>
+																										
+		<li><label>账号头像:</label><input type="file" id="member_dialog_photo" name="photo" onchange ="setImagePreviews(this,'member_shop_dialog_license')" /></li>
+		<li id="member_shop_dialog_license"></li>
+	</ul>
+
+</form>
+<div id="show_shop_dialog_license"></div>
+</div>
+<style>
+#member_form li{
+	list-style-type: none;
+	margin-top:20px;
+}
+#member_form li> label {
+	width: 100px;
+	display: inline-block;
+	text-align: right;
+}
+#member_shop_dialog_license{
+	border: 2px solid #ccc;
+	width: 100px;
+	height: 100px;
+	position: absolute;
+	top: 50px;
+	right: 50px;
+
+}
+</style>
+<script>
+var member_obj;
+var member_status_obj=[{id:0,name:"封禁"},{id:1,name:"正常"}];
+var member_sf_obj=[{id:1,name:"会员"},{id:2,name:"商家"}];
+$(function(){
+	MemberShopDataGrid();
+})
+function MemberShopDataGrid(){
+	member_obj = $('#member_data').datagrid({
+		url:'../../member',
+		queryParams:{op:"findByPage"},
+		fitColumns:true,
+		striped:true,//设置为true将交替显示行背景。
+		loadMsg:"数据加载中...",//当从远程站点载入数据时，显示的一条快捷信息。
+		pagination:true,
+		rownumbers:true,
+		pageSize: 5,
+		singleSelect:true,
+		pageList: [1,2,5,10,15,20,30,40,50],
+		sortName: "mid",
+		remoteSort: false,
+		columns:[[
+			{field:'mid',title:'会员编号',width:100,align:'center',sortable:"true"},
+			{field:'nickName',title:'昵称',width:150,align:'center'},
+			{field:'tel',title:'联系方式',width:100,align:'center'},
+			{field:'email',title:'邮箱',width:100,align:'center'},
+			{field:'status',title:'状态',width:60,align:'center', formatter:function(val, row, index){
+				if(val == 0){
+					return '<font color="red">禁用</font>';
+				}else if(val == 1){
+					return '<font color="green">正常</font>';
+				}		
+			}},
+			{field:'sf',title:'身份',width:60,align:'center', formatter:function(val, row, index){
+				if(val == 1){
+					return '<font color="green">会员</font>';
+				}else if(val == 2){
+					return '<font color="pink">商家</font>';
+				}		
+			}},
+			{field:'_operator',title:'操作',width:100,align:'center', formatter:function(val, row, index){
+				return '<a href="javascript:showUpdateMemberInfoDialog('+row.mid+')" class="navy-icon-edit">修改</a>&nbsp;<a href="javascript:showShopInfoDetail('+row.mid+')" class = "navy-icon-detail">详情</a>';	
+			}}
+		]],
+		toolbar:"#member_search"
+	});
+	}
+function showAddMemberInfoDialog(){
+	unlock();
+	$('#member_dialog').dialog({
+		title:'添加账号信息',
+		fit:true,
+		buttons:[
+			{
+				text:"添加",
+				iconCls:"icon-ok",
+				handler:function(){
+					member_addInfo();//调用添加的方法
+				}
+			},{
+				text:"取消",
+				iconCls:"icon-cancel",
+				handler:function(){
+					$('#shop_dialog').dialog('close')
+				}
+			}
+		]
+	});
+	$('#member_dialog').dialog('open');
+}
+	//修改 按钮事件
+function showUpdateMemberInfoDialog(mid){
+	unlock();
+		//现根据编号查信息
+		/*$.post("../../member",{op:"findByMid",mid:mid},data =>{
+			
+		},'json');*/
+		$.post("../../member",{op:"findByMid",mid:mid}, data =>{
+			if(data.code ==200){//说明成功
+				//$("#member_dialog_photo").attr("disabled","true");
+				$("#member_dialog_mid").val(data.data.mid);//账户编号
+				$("#member_dialog_name").val(data.data.nickName);//账户名称
+				$("#member_dialog_sf").val(data.data.sf);//身份
+				$("#member_dialog_status").val(data.data.status);//状态
+				$("#member_dialog_tel").val(data.data.tel);//电话
+				$("#member_dialog_email").val(data.data.email);//邮箱
+				if(data.data.photo==""||data.data.photo==null){
+					var imagStr = "<img src='../../images/memberlogo.png' width='100px' height='100px' />";
+				}else{
+					var imagStr = "<img src='../../"+data.data.photo+"' width='100px' height='100px' />";
+				}
+				$("#member_shop_dialog_license").html("").append($(imagStr));
+				imagStr ="";
+				
+			}
+		},"json");
+	$('#member_dialog').dialog({
+		title:'账户详细信息',
+		fit:true,
+		buttons:[
+			{
+				text:"修改",
+				iconCls:"icon-edit",
+				handler:function(){
+					member_update();//调用修改的方法
+				}
+			},{
+				text:"取消",
+				iconCls:"icon-cancel",
+				handler:function(){
+					$('#member_dialog').dialog('close');
+				}
+			}
+		]
+	});
+	$('#member_dialog').dialog('open');
+}
+	//查看
+function showShopInfoDetail(mid){
+	$.post("../../member",{op:"findByMid",mid:mid}, data =>{
+		if(data.code ==200){//说明成功
+			console.log(data.data);
+			$("#member_form input").attr("readonly","true");//禁用input
+			$("#member_form select").attr("disabled","true");//禁用 select
+			//$("#member_dialog_photo").attr("disabled","true");
+			$("#member_dialog_mid").val(data.data.mid);//账户编号
+			$("#member_dialog_name").val(data.data.nickName);//账户名称
+			$("#member_dialog_sf").val(data.data.sf);//身份
+			$("#member_dialog_status").val(data.data.status);//状态
+			$("#member_dialog_tel").val(data.data.tel);//电话
+			$("#member_dialog_email").val(data.data.email);//邮箱
+			if(data.data.photo==""||data.data.photo==null){
+				var imagStr = "<img src='../../images/memberlogo.png' width='100px' height='100px' />";
+			}else{
+				var imagStr = "<img src='../../"+data.data.photo+"' width='100px' height='100px' />";
+			}
+			
+			$("#member_shop_dialog_license").html("").append($(imagStr));
+			imagStr ="";
+			
+		}
+	},"json");
+	$('#member_dialog').dialog({
+		title:'账户详细信息',
+		fit:true,
+		buttons:[
+			{
+				text:"关闭",
+				iconCls:"icon-cancel",
+				handler:function(){
+					$('#member_dialog').dialog('close');
+				}
+			}
+		]
+	});
+	$('#member_dialog').dialog('open');
+}	
+function member_update(){
+	var nickName=$.trim($("#member_dialog_name").val());
+	var mid=$.trim($("#member_dialog_mid").val());
+	var email=$.trim($("#member_dialog_email").val());
+	var tel=$.trim($("#member_dialog_tel").val());
+	var status=$.trim($("#member_dialog_status").val());
+	var sf=$.trim($("#member_dialog_sf").val());
+	var obj = { tel:tel,nickName:nickName,email:email,status:status,sf:sf,mid:mid}
+	
+	$.ajaxFileUpload({
+		url:"../../member?op=update",//注意 字节流   op必须拼接在地址栏  否则后台无法request获取
+		secureuri:false,
+		fileElementId:["member_dialog_photo"],//所有file文本框的ID
+		dataType:"json",//数据格式
+		data: obj,//要发送的数据
+		success: function(data,status){
+			console.log(data.code);
+			if(data.code ==200){
+				member_obj.datagrid("reload");//从新加载数据
+				$('#member_dialog').dialog('close');//关闭提示框
+				$.messager.show({title:"成功提示",msg:"账号修改加成功...",timeout:2000,showType:"slide"});
+			}else{
+				$.messager.alert("失败提示","账号修改失败...\n","error");
+			}
+		},
+		error:function(data,status,e){
+			$.messager.alert("错误提示","账号修改失败...\n"+e,"error");
+		}
+	});
+
+}
+function member_addInfo(){
+	
+	var nickName=$.trim($("#member_dialog_name").val());
+	
+	var email=$.trim($("#member_dialog_email").val());
+	var tel=$.trim($("#member_dialog_tel").val());
+	var status=$.trim($("#member_dialog_status").val());
+	var sf=$.trim($("#member_dialog_sf").val());
+	var obj = { tel:tel,nickName:nickName,email:email,status:status,sf:sf,pwd:"123456"}
+	console.log(obj);
+	if(vaTel(tel)){
+		$.messager.alert("警告提示","电话号码不正确","error");
+		return;
+	}
+	$.ajaxFileUpload({
+		url:"../../member?op=add",//注意 字节流   op必须拼接在地址栏  否则后台无法request获取
+		secureuri:false,
+		fileElementId:["member_dialog_photo"],//所有file文本框的ID
+		dataType:"json",//数据格式
+		data: obj,//要发送的数据
+		success: function(data,status){
+			console.log(data.code);
+			if(data.code ==200){
+				member_obj.datagrid("reload");//从新加载数据
+				$('#member_dialog').dialog('close');//关闭提示框
+				$.messager.show({title:"成功提示",msg:"账号添加成功...",timeout:2000,showType:"slide"});
+			}else{
+				$.messager.alert("失败提示","账号添加失败...\n","error");
+			}
+		},
+		error:function(data,status,e){
+			$.messager.alert("错误提示","账号添加失败...\n"+e,"error");
+		}
+	});
+
+}
+
+function searchMemberInfo(){//条件查询
+	var mid =$.trim($("#member_search_mid").val());
+	var nickName=$.trim($("#member_search_name").val());
+	var status=$.trim($("#member_search_status").val());
+	var sf=$.trim($("#member_search_sf").val());
+	var tel=$.trim($("#member_search_tel").val());
+	var email=$.trim($("#member_search_email").val());
+	member_obj.datagrid({
+		url:"../../member", 
+		queryParams:{op:"findByCondition",mid:mid,nickName:nickName,sf:sf,tel:tel,email:email,status:status}
+	})
+}
+//清空for表单
+function unlock(){
+	$("#member_form")[0].reset();  //表单重置[0]相当于是将jquery对象转成js对象$(obj) -> js对象转成 jquery对象
+	$("#member_shop_dialog_license").html("");
+	$("#member_form input").removeAttr("readonly");//启用 input
+	$("#member_dialog_mid").attr("disabled","true");//禁用 input mid
+	//$("#member_form select").attr("disabled","true");//禁用 select
+	$("#member_form select").removeAttr("disabled");
+	
+	$("#member_dialog_photo").removeAttr("disabled");//启用上传按钮
+
+	
+	
+}
+
+</script>
+
+
+

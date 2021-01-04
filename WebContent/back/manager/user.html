@@ -1,0 +1,24 @@
+
+<ul>															<!--	 只读 -->
+		<li><label for="goods_dialog_sname">管理员ID:</label><input readonly="readonly" type="text" id="user_aid" class="navy_ipt400"/></li>
+		<li><label for="goods_dialog_sname">管理员姓名:</label><input readonly="readonly" type="text" id="user_name" class="navy_ipt400" /></li>
+		
+</ul>
+<!--  
+ <p id="user_name"></p>
+  <p id="user_aid"></p>
+ <p></p>-->
+<script >
+$(function(){
+	//console.log(index_obj.data.aname);
+	$("#user_name").val(index_obj.data.aname);
+	$("#user_aid").val(index_obj.data.aid);
+	
+	
+	
+});
+
+
+</script>
+
+
